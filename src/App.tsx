@@ -5,7 +5,9 @@
 
 import React, { useState } from 'react';
 import { JP8Patch } from './utils/jp8DspMath';
-import { JP8_FACTORY_PATCHES, generateTeensy41CppCode } from './utils/jp8SchematicData';
+import { JP8_FACTORY_PATCHES } from './utils/jp8SchematicData';
+import { generateTeensy41ProjectFiles } from './utils/jp8TeensyFirmwareGen';
+import { buildZipArchive } from './utils/zipBuilder';
 import { JP8SchematicExplorer } from './components/JP8SchematicExplorer';
 import { JP8SynthConsole } from './components/JP8SynthConsole';
 import { Teensy41PortingStudio } from './components/Teensy41PortingStudio';
@@ -14,12 +16,20 @@ export default function App() {
   const [activePatch, setActivePatch] = useState<JP8Patch>(JP8_FACTORY_PATCHES[0]);
 
   const handleQuickExportCpp = () => {
-    const cpp = generateTeensy41CppCode(activePatch, 8, 2, true);
-    const blob = new Blob([cpp], { type: 'text/plain;charset=utf-8' });
+    const files = generateTeensy41ProjectFiles(activePatch, 8, 2, true, true);
+    const zipBytes = buildZipArchive(
+      files.map((f) => ({
+        path: `jp8-teensy41-firmware/${f.path}`,
+        content: f.content,
+      }))
+    );
+    const copyBuffer = new Uint8Array(zipBytes.length);
+    copyBuffer.set(zipBytes);
+    const blob = new Blob([copyBuffer.buffer], { type: 'application/zip' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'AudioSynthJupiter8.h';
+    link.download = `jp8-teensy41-${activePatch.id}-platformio-github.zip`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
