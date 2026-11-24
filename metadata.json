@@ -1,0 +1,6 @@
+{
+  "name": "JP-8 Service Schematic & Teensy 4.1 DSP Studio",
+  "description": "Análise profunda do esquema eletrônico Roland Jupiter-8 (Dezembro 1982) com bancada de síntese DSP em tempo real e gerador de firmware C++ para Teensy 4.1.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
