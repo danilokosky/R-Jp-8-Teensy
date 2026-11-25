@@ -21,6 +21,7 @@ import {
   Monitor,
   Sliders,
 } from 'lucide-react';
+import { HardwareAssemblySchematic } from './HardwareAssemblySchematic';
 
 interface Teensy41PortingStudioProps {
   patch: JP8Patch;
@@ -199,6 +200,9 @@ export const Teensy41PortingStudio: React.FC<Teensy41PortingStudioProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Complete Interactive Wiring Schematic & Point-to-Point Netlist */}
+      <HardwareAssemblySchematic />
 
       {/* Novation Launchkey MK4 Complete Hardware Mapping & Simulated ILI9341 TFT Screen */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
