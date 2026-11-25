@@ -96,9 +96,11 @@ struct EnvelopeState {
 
 struct VoiceState {
   bool active = false;
+  bool heldBySustainPedal = false;
   uint8_t midiNote = 60;
   float velocity = 1.0f;
   float currentNotePitch = 60.0f;
+  float lfoDelayEnv = 0.0f; // Emula circuito LFO Delay TR23~TR27 + BA662 IC8 (Pág. 13)
   uint32_t ageCounter = 0;
 
   // Fases dos VCOs e integradores do filtro
@@ -145,6 +147,7 @@ public:
 
   void setParameters(const JP8Parameters& p) { params_ = p; }
   const JP8Parameters& parameters() const { return params_; }
+  JP8Parameters& mutableParameters() { return params_; }
 
   // Calibração Compu-Tune em 2 pontos (Pág. 50) com erro residual do DAC 14-bit ITS80141
   void initCompuTuneTables() {
@@ -160,12 +163,99 @@ public:
   }
 
   void runCompuTune() {
-    // Recalibra todas as vozes para tolerância do DAC ITS80141 (±0.61 mV / ±0.7 cents)
     for (int v = 0; v < MaxVoices; ++v) {
       for (int osc = 0; osc < 2; ++osc) {
         voices_[v].cal[osc].scaleWidthW = 0.083333f;
         voices_[v].cal[osc].thermalDriftCents *= 0.25f;
       }
+    }
+  }
+
+  // Bender Board OPH132 (Pitch Bend normalizado -1.0 a +1.0)
+  void setPitchBend(float normMinus1To1) {
+    pitchBendNorm_ = std::clamp(normMinus1To1, -1.0f, 1.0f);
+  }
+
+  // Mod Wheel do Launchkey MK4 (CC 1 -> LFO Send)
+  void setModWheel(float norm0To1) {
+    modWheelNorm_ = std::clamp(norm0To1, 0.0f, 1.0f);
+  }
+
+  // Pedal de Sustain / Hold Jack (AJ1-10 Pág. 3 & 25)
+  void setSustainPedal(bool held) {
+    sustainPedalHeld_ = held;
+    if (!held) {
+      for (int v = 0; v < MaxVoices; ++v) {
+        if (voices_[v].active && voices_[v].heldBySustainPedal) {
+          voices_[v].heldBySustainPedal = false;
+          voices_[v].env1.releaseNote();
+          voices_[v].env2.releaseNote();
+        }
+      }
+    }
+  }
+
+  // Handler completo de MIDI CC otimizado para Novation Launchkey MK4
+  void applyLaunchkeyMidiCC(uint8_t cc, uint8_t val) {
+    const float norm = static_cast<float>(val) / 127.0f;
+    switch (cc) {
+      case 1: // Mod Wheel
+        setModWheel(norm);
+        break;
+      case 5: // Portamento Time
+        params_.portamentoSec = norm * 1.5f;
+        break;
+      case 7: // Master VCA Volume
+        params_.vcaLevel = norm;
+        break;
+      case 21: // Launchkey Encoder 1 -> VCF Cutoff
+      case 74:
+        params_.vcfCutoffHz = 30.0f * std::exp2(norm * 9.2f);
+        break;
+      case 22: // Launchkey Encoder 2 -> VCF Resonance
+      case 71:
+        params_.vcfResonance = norm * 10.0f;
+        break;
+      case 23: // Launchkey Encoder 3 -> VCF Env Mod
+        params_.vcfEnvMod = norm * 10.0f;
+        break;
+      case 24: // Launchkey Encoder 4 -> VCO Cross-Mod (X-MOD)
+        params_.crossModDepth = norm * 10.0f;
+        break;
+      case 25: // Launchkey Encoder 5 -> VCO-2 Fine Detune (-50..+50c)
+        params_.vco2FineCents = (norm - 0.5f) * 100.0f;
+        break;
+      case 26: // Launchkey Encoder 6 -> VCO-1 Pulse Width
+        params_.vco1Pw = 0.05f + norm * 0.90f;
+        break;
+      case 27: // Launchkey Encoder 7 -> HPF Cutoff
+        params_.hpfCutoffHz = 20.0f * std::exp2(norm * 6.2f);
+        break;
+      case 28: // Launchkey Encoder 8 -> LFO Rate
+        params_.lfoRateHz = 0.1f + norm * 30.0f;
+        break;
+      // Launchkey 49/61 Faders 1..4 -> ENV-1 ADSR
+      case 53: params_.env1AttackSec  = 0.001f + norm * 2.5f; break;
+      case 54: params_.env1DecaySec   = 0.010f + norm * 4.0f; break;
+      case 55: params_.env1Sustain    = norm; break;
+      case 56: params_.env1ReleaseSec = 0.010f + norm * 4.0f; break;
+      // Launchkey 49/61 Faders 5..8 -> ENV-2 ADSR
+      case 57:
+      case 73: params_.env2AttackSec  = 0.001f + norm * 2.5f; break;
+      case 58: params_.env2DecaySec   = 0.010f + norm * 4.0f; break;
+      case 59: params_.env2Sustain    = norm; break;
+      case 60:
+      case 72: params_.env2ReleaseSec = 0.010f + norm * 4.0f; break;
+      // Launchkey Fader 9 -> Source Mix VCO-1 / VCO-2
+      case 61: params_.sourceMix      = norm; break;
+      // Sustain Pedal
+      case 64: setSustainPedal(val >= 64); break;
+      // Botões/Pads de Atalho
+      case 80: params_.hardSync   = (val >= 64); break;
+      case 81: params_.vcfSlopeDb = (val >= 64) ? 24 : 12; break;
+      case 82: if (val >= 64) runCompuTune(); break;
+      case 123: allNotesOff(); break;
+      default: break;
     }
   }
 
@@ -185,7 +275,6 @@ public:
       return;
     }
 
-    // POLY1 (Round-Robin / Reassign) ou POLY2
     int chosen = -1;
     for (int step = 0; step < MaxVoices; ++step) {
       const int idx = (rrCursor_ + step) % MaxVoices;
@@ -196,7 +285,6 @@ public:
       }
     }
     if (chosen < 0) {
-      // Voice stealing pela voz mais antiga
       chosen = 0;
       uint32_t oldestAge = voices_[0].ageCounter;
       for (int i = 1; i < MaxVoices; ++i) {
@@ -212,14 +300,20 @@ public:
   void noteOff(uint8_t midiNote) {
     for (int v = 0; v < MaxVoices; ++v) {
       if (voices_[v].active && voices_[v].midiNote == midiNote) {
-        voices_[v].env1.releaseNote();
-        voices_[v].env2.releaseNote();
+        if (sustainPedalHeld_) {
+          voices_[v].heldBySustainPedal = true;
+        } else {
+          voices_[v].env1.releaseNote();
+          voices_[v].env2.releaseNote();
+        }
       }
     }
   }
 
   void allNotesOff() {
+    sustainPedalHeld_ = false;
     for (int v = 0; v < MaxVoices; ++v) {
+      voices_[v].heldBySustainPedal = false;
       voices_[v].env1.releaseNote();
       voices_[v].env2.releaseNote();
     }
@@ -239,7 +333,6 @@ public:
         const float sample = renderVoiceSubStep(voices_[v], lfoVal);
 
 #if JP8_STEREO_PAN
-        // Espalhamento estéreo sutil das vozes A..H (Upper/Lower pan)
         const float pan = (static_cast<float>(v) / std::max(1, MaxVoices - 1));
         const float gainL = 0.85f * (1.0f - 0.35f * pan);
         const float gainR = 0.85f * (0.65f + 0.35f * pan);
@@ -257,6 +350,10 @@ public:
     const float invOs = (1.0f / static_cast<float>(Oversample)) * 0.28f;
     outLeft  = fastOtaTanh(accumL * invOs);
     outRight = fastOtaTanh(accumR * invOs);
+
+    // Captura de decimação para o osciloscópio da tela TFT ILI9341
+    scopeRing_[scopeWriteIdx_ & 0xFF] = outLeft;
+    scopeWriteIdx_++;
   }
 
   int activeVoiceCount() const {
@@ -267,6 +364,18 @@ public:
     return count;
   }
 
+  uint8_t activeVoiceBitmask() const {
+    uint8_t mask = 0;
+    for (int v = 0; v < std::min(8, MaxVoices); ++v) {
+      if (voices_[v].active) mask |= (1u << v);
+    }
+    return mask;
+  }
+
+  float getScopeSample(uint8_t idx) const {
+    return scopeRing_[idx];
+  }
+
 private:
   JP8Parameters params_;
   VoiceState voices_[MaxVoices];
@@ -275,15 +384,22 @@ private:
   float lfoPhase_ = 0.0f;
   float lfoHeldRandom_ = 0.0f;
   uint32_t lfoPrng_ = 0xCAFEBABEu;
+  float pitchBendNorm_ = 0.0f;
+  float modWheelNorm_ = 0.0f;
+  bool sustainPedalHeld_ = false;
+  float scopeRing_[256] = {0.0f};
+  uint8_t scopeWriteIdx_ = 0;
 
   void allocateVoice(int idx, uint8_t midiNote, float velocityNorm, float unisonSemitones) {
     VoiceState& v = voices_[idx];
     v.active = true;
+    v.heldBySustainPedal = false;
     v.midiNote = midiNote;
     v.velocity = std::clamp(velocityNorm, 0.05f, 1.0f);
     if (params_.portamentoSec <= 0.001f) {
       v.currentNotePitch = static_cast<float>(midiNote) + unisonSemitones;
     }
+    v.lfoDelayEnv = (params_.lfoDelaySec <= 0.002f) ? 1.0f : 0.0f;
     v.ageCounter = globalAge_;
     v.env1.trigger();
     v.env2.trigger();
@@ -334,7 +450,6 @@ private:
       sq -= polyBlep(shifted, dt);
       return sq;
     }
-    // TRIANGLE via Leaky Integrated PolyBLEP Square (sem aliasing)
     float sq = (phase < 0.5f) ? 1.0f : -1.0f;
     sq += polyBlep(phase, dt);
     float shifted = phase - 0.5f;
@@ -345,7 +460,6 @@ private:
   }
 
   float computeDac14BitNote(const VoiceCalibration& cal, float targetNote) const {
-    // Equação (2) Pág. 50: VKn_x = T - W * (84 - Kn_x), quantizado em 14 bits (ITS80141)
     const float vIdeal = cal.refVoltageT - cal.scaleWidthW * (84.0f - targetNote);
     const float qCode = std::round(std::clamp((vIdeal / 10.0f) * 16384.0f, 0.0f, 16383.0f));
     const float vQuant = (qCode / 16384.0f) * 10.0f;
@@ -355,7 +469,7 @@ private:
   float renderVoiceSubStep(VoiceState& v, float lfoVal) {
     const float sr = kInternalSampleRate;
 
-    // 1. Envelopes IR3R01
+    // 1. Envelopes IR3R01 + LFO Delay (TR23~TR27 + BA662 IC8 Pág. 13)
     const float e1 = v.env1.process(params_.env1AttackSec, params_.env1DecaySec,
                                     params_.env1Sustain, params_.env1ReleaseSec,
                                     params_.env1KeyFollow, v.midiNote, sr);
@@ -368,17 +482,24 @@ private:
       return 0.0f;
     }
 
-    // 2. Portamento analógico (Pág. 19)
+    if (params_.lfoDelaySec > 0.002f && v.lfoDelayEnv < 1.0f) {
+      const float delayCoef = 1.0f - std::exp(-1.0f / (params_.lfoDelaySec * sr));
+      v.lfoDelayEnv = std::min(1.0f, v.lfoDelayEnv + delayCoef * (1.05f - v.lfoDelayEnv));
+    }
+    const float effectiveLfo = lfoVal * std::max(v.lfoDelayEnv, modWheelNorm_);
+
+    // 2. Portamento analógico (Pág. 19) + Pitch Bend (Bender OPH132 Pág. 24)
     if (params_.portamentoSec > 0.001f) {
       const float target = static_cast<float>(v.midiNote);
       const float coef = 1.0f - std::exp(-1.0f / (params_.portamentoSec * sr));
       v.currentNotePitch += coef * (target - v.currentNotePitch);
     }
+    const float bentNotePitch = v.currentNotePitch + (pitchBendNorm_ * params_.pitchBendRangeSemi);
 
     // 3. Frequências VCO-2 e VCO-1 com quantização 14-bit Compu-Tune + X-MOD + Hard Sync
     const float pitch2Note = computeDac14BitNote(
       v.cal[1],
-      v.currentNotePitch + static_cast<float>(params_.vco2OctaveShift * 12) + (params_.vco2FineCents / 100.0f)
+      bentNotePitch + static_cast<float>(params_.vco2OctaveShift * 12) + (params_.vco2FineCents / 100.0f)
     );
     float freq2 = 440.0f * std::exp2((pitch2Note - 69.0f) / 12.0f);
     if (params_.vco2LowFreq) freq2 *= 0.0625f;
@@ -396,14 +517,13 @@ private:
     const float vco2Out = renderOscSample(params_.vco2Wave, v.phase2, dt2, params_.vco2Pw,
                                           v.triIntegrator2, v, params_.vco2LowFreq);
 
-    // X-MOD (BA662 IC6A): 3 oitavas de modulação em depth=5.0 (Pág. 33)
     const float xModOctaves = (params_.crossModDepth * 0.6f) * vco2Out;
     const float envOctaves  = (params_.vco1ModEnv * 0.25f) * e1;
-    const float lfoOctaves  = (params_.vco1ModLfo * 0.08f) * lfoVal;
+    const float lfoOctaves  = ((params_.vco1ModLfo * 0.08f) + (modWheelNorm_ * 0.12f)) * effectiveLfo;
 
     const float pitch1Note = computeDac14BitNote(
       v.cal[0],
-      v.currentNotePitch + static_cast<float>(params_.vco1OctaveShift * 12)
+      bentNotePitch + static_cast<float>(params_.vco1OctaveShift * 12)
     );
     const float freq1 = 440.0f * std::exp2(((pitch1Note - 69.0f) / 12.0f) + xModOctaves + envOctaves + lfoOctaves);
     const float dt1 = std::clamp(freq1 / sr, 0.00001f, 0.45f);
@@ -414,7 +534,7 @@ private:
       v.phase1 = std::clamp(syncFrac * dt1, 0.0f, 0.9999f);
     }
 
-    const float pw1 = std::clamp(params_.vco1Pw + (params_.vco1PwmDepth * 0.04f) * lfoVal, 0.05f, 0.95f);
+    const float pw1 = std::clamp(params_.vco1Pw + (params_.vco1PwmDepth * 0.04f) * effectiveLfo, 0.05f, 0.95f);
     const float vco1Out = renderOscSample(params_.vco1Wave, v.phase1, dt1, pw1,
                                           v.triIntegrator1, v, false);
 
@@ -428,9 +548,9 @@ private:
 
     // 6. VCF Roland IR3109 (4-Stage Cascaded OTA ZDF TPT Ladder)
     const float vcfEnvVal = params_.vcfEnvFromEnv2 ? e2 : e1;
-    const float kfSemi = (v.currentNotePitch - 60.0f) * params_.vcfKeyFollow;
+    const float kfSemi = (bentNotePitch - 60.0f) * params_.vcfKeyFollow;
     const float modOct = (params_.vcfEnvMod * 0.45f * static_cast<float>(params_.vcfEnvPolarity) * vcfEnvVal)
-                       + (params_.vcfLfoMod * 0.25f * lfoVal);
+                       + (params_.vcfLfoMod * 0.25f * effectiveLfo);
     const float dynCutoff = std::clamp(
       params_.vcfCutoffHz * std::exp2((kfSemi / 12.0f) + modOct),
       25.0f, sr * 0.42f
@@ -462,7 +582,7 @@ private:
 #endif
 
     // 7. VCA BA662A (ENV-2 * VCA Level * Velocity)
-    const float lfoVca = 1.0f + (params_.vcaLfoMod * 0.15f) * lfoVal;
+    const float lfoVca = 1.0f + (params_.vcaLfoMod * 0.15f) * effectiveLfo;
     return vcfOut * e2 * params_.vcaLevel * v.velocity * lfoVca;
   }
 };

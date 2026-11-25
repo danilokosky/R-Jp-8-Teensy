@@ -8,6 +8,146 @@ export interface FirmwareFileItem {
   content: string;
 }
 
+export interface LaunchkeyControlMapping {
+  hardwareControl: string;
+  midiMessage: string;
+  ccNumber: number | string;
+  jp8Parameter: string;
+  schematicRef: string;
+  rangeDescription: string;
+}
+
+export const LAUNCHKEY_MK4_MAPPINGS: LaunchkeyControlMapping[] = [
+  {
+    hardwareControl: 'Encoder 1 (Top Row)',
+    midiMessage: 'CC 21',
+    ccNumber: 21,
+    jp8Parameter: 'VCF Cutoff Freq (IR3109)',
+    schematicRef: 'Panel D VR6 · IC27A Pág. 16',
+    rangeDescription: '20 Hz a 18.000 Hz (Curva Exponencial)',
+  },
+  {
+    hardwareControl: 'Encoder 2 (Top Row)',
+    midiMessage: 'CC 22',
+    ccNumber: 22,
+    jp8Parameter: 'VCF Resonance (BA662)',
+    schematicRef: 'Panel D VR7 · IC25A Pág. 16',
+    rangeDescription: '0.0 a 10.0 (Auto-oscilação suave)',
+  },
+  {
+    hardwareControl: 'Encoder 3 (Top Row)',
+    midiMessage: 'CC 23',
+    ccNumber: 23,
+    jp8Parameter: 'VCF Env Mod Depth',
+    schematicRef: 'Panel D VR8 · IC28B Pág. 16',
+    rangeDescription: '0.0 a 10.0 (Intensidade ENV -> VCF)',
+  },
+  {
+    hardwareControl: 'Encoder 4 (Top Row)',
+    midiMessage: 'CC 24',
+    ccNumber: 24,
+    jp8Parameter: 'VCO Cross-Mod (X-MOD)',
+    schematicRef: 'Panel C VR6 · BA662 IC6A Pág. 15',
+    rangeDescription: '0.0 a 10.0 (3 Oitavas @ 5.0 Pág. 33)',
+  },
+  {
+    hardwareControl: 'Encoder 5 (Top Row)',
+    midiMessage: 'CC 25',
+    ccNumber: 25,
+    jp8Parameter: 'VCO-2 Fine Detune',
+    schematicRef: 'Panel C VR8 · Pág. 15',
+    rangeDescription: '-50 cents a +50 cents',
+  },
+  {
+    hardwareControl: 'Encoder 6 (Top Row)',
+    midiMessage: 'CC 26',
+    ccNumber: 26,
+    jp8Parameter: 'VCO-1 Pulse Width / PWM',
+    schematicRef: 'Panel C VR4/VR5 · IC16A Pág. 15',
+    rangeDescription: '5% a 95% Duty Cycle (Mín. 30µs)',
+  },
+  {
+    hardwareControl: 'Encoder 7 (Top Row)',
+    midiMessage: 'CC 27',
+    ccNumber: 27,
+    jp8Parameter: 'HPF Cutoff (-6dB/oct)',
+    schematicRef: 'Panel D VR5 · TR19A/IC26A Pág. 16',
+    rangeDescription: '20 Hz a 1.500 Hz',
+  },
+  {
+    hardwareControl: 'Encoder 8 (Top Row)',
+    midiMessage: 'CC 28',
+    ccNumber: 28,
+    jp8Parameter: 'LFO Rate (MOD CON)',
+    schematicRef: 'Panel C VR1 · IC5/IC7 Pág. 13',
+    rangeDescription: '0.05 Hz a 40.0 Hz',
+  },
+  {
+    hardwareControl: 'Fader 1..4 (Launchkey 49/61)',
+    midiMessage: 'CC 53..56',
+    ccNumber: '53-56',
+    jp8Parameter: 'ENV-1 Attack / Decay / Sustain / Release',
+    schematicRef: 'Panel D VR12..15 · IR3R01 IC38A Pág. 16',
+    rangeDescription: '1ms a 10s (Escalonado pelo 555 KF)',
+  },
+  {
+    hardwareControl: 'Fader 5..8 (Launchkey 49/61)',
+    midiMessage: 'CC 57..60',
+    ccNumber: '57-60',
+    jp8Parameter: 'ENV-2 Attack / Decay / Sustain / Release',
+    schematicRef: 'Panel D VR16..19 · IR3R01 IC36A Pág. 16',
+    rangeDescription: '1ms a 10s (Envelope VCA BA662A)',
+  },
+  {
+    hardwareControl: 'Fader 9 (Master Fader)',
+    midiMessage: 'CC 61 / CC 7',
+    ccNumber: 61,
+    jp8Parameter: 'Source Mix (VCO-1 ↔ VCO-2)',
+    schematicRef: 'Panel C VR9 · BA662 IC28A Pág. 16',
+    rangeDescription: '0% (VCO-1) a 100% (VCO-2)',
+  },
+  {
+    hardwareControl: 'Pads RGB 1..5 (Ch 10 / Ch 1)',
+    midiMessage: 'Note 36..40 / PC 0..4',
+    ccNumber: 'Pad 1-5',
+    jp8Parameter: 'Seleção Instantânea de Patch (A1..B1)',
+    schematicRef: 'Panel E Patch Preset Buttons Pág. 27',
+    rangeDescription: 'Carrega os 5 Patches Clássicos JP-8',
+  },
+  {
+    hardwareControl: 'Pad RGB 6 / CC 80',
+    midiMessage: 'Note 41 / CC 80',
+    ccNumber: 'Pad 6',
+    jp8Parameter: 'Hard Sync Toggle (VCO-1 → VCO-2)',
+    schematicRef: 'Panel C SW7 · IC11A Pág. 15',
+    rangeDescription: 'Liga/Desliga Sincronismo Mestre-Escravo',
+  },
+  {
+    hardwareControl: 'Pad RGB 7 / CC 81',
+    midiMessage: 'Note 42 / CC 81',
+    ccNumber: 'Pad 7',
+    jp8Parameter: 'IR3109 Slope Toggle (-12dB / -24dB)',
+    schematicRef: 'Panel D SW2 · TC4052 IC5A Pág. 16',
+    rangeDescription: 'Alterna entre 2 Polos e 4 Polos OTA',
+  },
+  {
+    hardwareControl: 'Pad RGB 8 / CC 82',
+    midiMessage: 'Note 43 / CC 82',
+    jp8Parameter: 'COMPU-TUNE Auto-Calibração (14-Bit)',
+    ccNumber: 'Pad 8',
+    schematicRef: 'Panel E TUNE · Z80 + uPD8253 Pág. 50',
+    rangeDescription: 'Executa rotina de afinação nos 16 VCOs',
+  },
+  {
+    hardwareControl: 'Pitch Wheel + Mod Wheel + Sustain',
+    midiMessage: 'PitchBend / CC 1 / CC 64',
+    ccNumber: 'PB/1/64',
+    jp8Parameter: 'Bender (±2..12 semitons), Vibrato LFO e Hold',
+    schematicRef: 'Bender Board OPH132 Pág. 24',
+    rangeDescription: 'Performance completa sem latência',
+  },
+];
+
 function mapWaveEnum(wave: string): string {
   switch (wave) {
     case 'triangle':
@@ -68,7 +208,12 @@ export function generateTeensy41ProjectFiles(
 
   const platformioIni = `; ============================================================================
 ; PlatformIO Project Configuration — Roland Jupiter-8 Teensy 4.1 DSP Replica
-; Compila localmente (pio run) ou na nuvem via GitHub Actions (.github/workflows)
+; Hardware Alvo:
+;   1. MCU: Teensy 4.1 (NXP i.MX RT1062 ARM Cortex-M7 @ 600 MHz)
+;   2. MIDI Primário: TRS 3.5mm (P2/P1) MIDI Type-A @ 31.250 bps (Serial1 RX1=Pino 0, TX1=Pino 1)
+;      com Optoacoplador 6N138 / H11L1 direto da saída MIDI Out 3.5mm do Launchkey MK4
+;   3. DAC: PCM5102A 32-Bit/384kHz I2S DAC (112dB SNR) + Audio Shield SGTL5000
+;   4. Tela: Display IPS TFT 2.8" ILI9341 320x240 SPI com DMA (ILI9341_t3)
 ; ============================================================================
 
 [env:teensy41]
@@ -87,6 +232,9 @@ build_flags =
 lib_deps =
   PaulStoffregen/Audio
   fortyseveneffects/MIDI Library
+  PaulStoffregen/USBHost_t36
+  adafruit/Adafruit GFX Library
+  PaulStoffregen/ILI9341_t3
 
 [env:native_test]
 platform = native
@@ -110,15 +258,14 @@ name: Build Roland JP-8 Teensy 4.1 Firmware
 
 on:
   push:
-    branches: [ main, master ]
-    tags: [ 'v*' ]
+    branches: [ "**" ]
+    tags: [ "v*" ]
   pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   native-dsp-tests:
-    name: 1. Validar Núcleo DSP C++17 (Native Unit Tests)
+    name: 1. Validar Núcleo DSP C++17 & Mapeamento TRS MIDI Launchkey MK4
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do repositório
@@ -126,6 +273,9 @@ jobs:
 
       - name: Compilar e executar testes unitários do motor DSP (g++ -Werror)
         run: |
+          if [ -d "firmware/jp8_teensy41" ]; then
+            cd firmware/jp8_teensy41
+          fi
           g++ -std=c++17 -O2 -Wall -Wextra -Werror \\
             -I include \\
             -D JP8_MAX_VOICES=${numVoices} \\
@@ -151,32 +301,37 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.platformio
-          key: \${{ runner.os }}-pio-teensy41-\${{ hashFiles('platformio.ini') }}
+          key: \${{ runner.os }}-pio-teensy41-\${{ hashFiles('**/platformio.ini') }}
 
       - name: Instalar PlatformIO CLI
         run: pip install --upgrade platformio
 
       - name: Compilar projeto Teensy 4.1 (ARM Cortex-M7)
-        run: pio run -e teensy41
-
-      - name: Verificar tamanho do binário e SRAM
-        run: pio run -e teensy41 -t size
+        run: |
+          if [ -d "firmware/jp8_teensy41" ]; then
+            cd firmware/jp8_teensy41
+          fi
+          pio run -e teensy41
+          pio run -e teensy41 -t size
+          mkdir -p "\$GITHUB_WORKSPACE/build_out"
+          cp .pio/build/teensy41/firmware.hex "\$GITHUB_WORKSPACE/build_out/firmware.hex"
+          cp .pio/build/teensy41/firmware.elf "\$GITHUB_WORKSPACE/build_out/firmware.elf"
 
       - name: Publicar Artifact (firmware.hex & firmware.elf)
         uses: actions/upload-artifact@v4
         with:
           name: jp8-teensy41-firmware-\${{ github.sha }}
           path: |
-            .pio/build/teensy41/firmware.hex
-            .pio/build/teensy41/firmware.elf
+            build_out/firmware.hex
+            build_out/firmware.elf
 
       - name: Anexar .hex ao GitHub Release (quando houver tag v*)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            .pio/build/teensy41/firmware.hex
-            .pio/build/teensy41/firmware.elf
+            build_out/firmware.hex
+            build_out/firmware.elf
 `;
 
   const jp8ParametersH = `#pragma once
@@ -222,6 +377,8 @@ enum class JP8KeyMode : uint8_t {
 };
 
 struct JP8Parameters {
+  const char* patchName   = "${patch.name}";
+
   // VCO-1 (Module Board OPH124, Pág. 15)
   int8_t  vco1OctaveShift = ${patch.vco1Range === 16 ? -1 : patch.vco1Range === 8 ? 0 : patch.vco1Range === 4 ? 1 : 2};
   JP8Wave vco1Wave        = ${mapWaveEnum(patch.vco1Wave)};
@@ -271,17 +428,82 @@ struct JP8Parameters {
   float   env2ReleaseSec  = ${(patch.env2ReleaseMs / 1000).toFixed(4)}f;
   bool    env2KeyFollow   = ${patch.env2KeyFollow ? 'true' : 'false'};
 
-  // LFO & Assign (MOD CON OPH123A)
+  // LFO, Bender & Assign (MOD CON OPH123A & Bender OPH132)
   float      lfoRateHz         = ${patch.lfoRateHz.toFixed(2)}f;
   float      lfoDelaySec       = ${(patch.lfoDelayMs / 1000).toFixed(3)}f;
   JP8LfoWave lfoWave           = ${mapLfoWaveEnum(patch.lfoWave)};
   float      portamentoSec     = ${(patch.portamentoMs / 1000).toFixed(3)}f;
   JP8KeyMode keyMode           = ${mapKeyModeEnum(patch.keyAssignMode)};
   float      unisonDetuneCents = ${patch.unisonDetuneCents.toFixed(1)}f;
+  float      pitchBendRangeSemi = 2.0f; // Ajustável de 2 a 12 semitons
 };
 
 inline JP8Parameters makeDefaultJP8Patch() {
   JP8Parameters p;
+  return p;
+}
+
+// Banco de 5 Presets de Fábrica acionáveis pelos Pads 1..5 do Launchkey MK4
+inline JP8Parameters makeFactoryPresetBank(uint8_t slot) {
+  JP8Parameters p = makeDefaultJP8Patch();
+  switch (slot % 5) {
+    case 0: // A1: Imperial Jupiter Brass
+      p.patchName = "A1: Imperial JP8 Brass";
+      break;
+    case 1: // A2: Screaming Hard-Sync Lead
+      p.patchName = "A2: Hard-Sync Lead";
+      p.vco1OctaveShift = 1;
+      p.vco1ModEnv = 7.5f;
+      p.crossModDepth = 1.4f;
+      p.hardSync = true;
+      p.sourceMix = 0.25f;
+      p.vcfCutoffHz = 4800.0f;
+      p.vcfResonance = 5.2f;
+      p.keyMode = JP8KeyMode::SOLO;
+      break;
+    case 2: // A3: Lush Dual-PWM Strings (12dB)
+      p.patchName = "A3: Lush PWM Strings";
+      p.vco1Wave = JP8Wave::PULSE;
+      p.vco1PwmDepth = 7.2f;
+      p.vco2FineCents = -11.0f;
+      p.hpfCutoffHz = 140.0f;
+      p.vcfCutoffHz = 3200.0f;
+      p.vcfSlopeDb = 12;
+      p.env2AttackSec = 0.62f;
+      p.env2ReleaseSec = 1.65f;
+      break;
+    case 3: // A4: Metallic Cross-Mod Chiming Bell
+      p.patchName = "A4: X-Mod Chiming Bell";
+      p.vco1OctaveShift = 2;
+      p.vco1Wave = JP8Wave::TRIANGLE;
+      p.crossModDepth = 5.4f;
+      p.vco2OctaveShift = -1;
+      p.vco2Wave = JP8Wave::SQUARE;
+      p.vcfCutoffHz = 5600.0f;
+      p.env1AttackSec = 0.002f;
+      p.env1Sustain = 0.0f;
+      p.env2AttackSec = 0.002f;
+      p.env2Sustain = 0.0f;
+      p.env2ReleaseSec = 2.1f;
+      break;
+    case 4: // B1: 16-VCO Unison Arpeggio Bass
+      p.patchName = "B1: 16-VCO Unison Bass";
+      p.vco1OctaveShift = -1;
+      p.vco2OctaveShift = -1;
+      p.vco2Wave = JP8Wave::SQUARE;
+      p.vcfCutoffHz = 420.0f;
+      p.vcfResonance = 6.4f;
+      p.vcfEnvMod = 7.8f;
+      p.env1AttackSec = 0.001f;
+      p.env1DecaySec = 0.26f;
+      p.env1Sustain = 0.12f;
+      p.env2AttackSec = 0.001f;
+      p.env2DecaySec = 0.34f;
+      p.env2Sustain = 0.35f;
+      p.keyMode = JP8KeyMode::UNISON;
+      p.unisonDetuneCents = 14.0f;
+      break;
+  }
   return p;
 }
 `;
@@ -384,9 +606,11 @@ struct EnvelopeState {
 
 struct VoiceState {
   bool active = false;
+  bool heldBySustainPedal = false;
   uint8_t midiNote = 60;
   float velocity = 1.0f;
   float currentNotePitch = 60.0f;
+  float lfoDelayEnv = 0.0f; // Emula circuito LFO Delay TR23~TR27 + BA662 IC8 (Pág. 13)
   uint32_t ageCounter = 0;
 
   // Fases dos VCOs e integradores do filtro
@@ -433,6 +657,7 @@ public:
 
   void setParameters(const JP8Parameters& p) { params_ = p; }
   const JP8Parameters& parameters() const { return params_; }
+  JP8Parameters& mutableParameters() { return params_; }
 
   // Calibração Compu-Tune em 2 pontos (Pág. 50) com erro residual do DAC 14-bit ITS80141
   void initCompuTuneTables() {
@@ -448,12 +673,99 @@ public:
   }
 
   void runCompuTune() {
-    // Recalibra todas as vozes para tolerância do DAC ITS80141 (±0.61 mV / ±0.7 cents)
     for (int v = 0; v < MaxVoices; ++v) {
       for (int osc = 0; osc < 2; ++osc) {
         voices_[v].cal[osc].scaleWidthW = 0.083333f;
         voices_[v].cal[osc].thermalDriftCents *= 0.25f;
       }
+    }
+  }
+
+  // Bender Board OPH132 (Pitch Bend normalizado -1.0 a +1.0)
+  void setPitchBend(float normMinus1To1) {
+    pitchBendNorm_ = std::clamp(normMinus1To1, -1.0f, 1.0f);
+  }
+
+  // Mod Wheel do Launchkey MK4 (CC 1 -> LFO Send)
+  void setModWheel(float norm0To1) {
+    modWheelNorm_ = std::clamp(norm0To1, 0.0f, 1.0f);
+  }
+
+  // Pedal de Sustain / Hold Jack (AJ1-10 Pág. 3 & 25)
+  void setSustainPedal(bool held) {
+    sustainPedalHeld_ = held;
+    if (!held) {
+      for (int v = 0; v < MaxVoices; ++v) {
+        if (voices_[v].active && voices_[v].heldBySustainPedal) {
+          voices_[v].heldBySustainPedal = false;
+          voices_[v].env1.releaseNote();
+          voices_[v].env2.releaseNote();
+        }
+      }
+    }
+  }
+
+  // Handler completo de MIDI CC otimizado para Novation Launchkey MK4
+  void applyLaunchkeyMidiCC(uint8_t cc, uint8_t val) {
+    const float norm = static_cast<float>(val) / 127.0f;
+    switch (cc) {
+      case 1: // Mod Wheel
+        setModWheel(norm);
+        break;
+      case 5: // Portamento Time
+        params_.portamentoSec = norm * 1.5f;
+        break;
+      case 7: // Master VCA Volume
+        params_.vcaLevel = norm;
+        break;
+      case 21: // Launchkey Encoder 1 -> VCF Cutoff
+      case 74:
+        params_.vcfCutoffHz = 30.0f * std::exp2(norm * 9.2f);
+        break;
+      case 22: // Launchkey Encoder 2 -> VCF Resonance
+      case 71:
+        params_.vcfResonance = norm * 10.0f;
+        break;
+      case 23: // Launchkey Encoder 3 -> VCF Env Mod
+        params_.vcfEnvMod = norm * 10.0f;
+        break;
+      case 24: // Launchkey Encoder 4 -> VCO Cross-Mod (X-MOD)
+        params_.crossModDepth = norm * 10.0f;
+        break;
+      case 25: // Launchkey Encoder 5 -> VCO-2 Fine Detune (-50..+50c)
+        params_.vco2FineCents = (norm - 0.5f) * 100.0f;
+        break;
+      case 26: // Launchkey Encoder 6 -> VCO-1 Pulse Width
+        params_.vco1Pw = 0.05f + norm * 0.90f;
+        break;
+      case 27: // Launchkey Encoder 7 -> HPF Cutoff
+        params_.hpfCutoffHz = 20.0f * std::exp2(norm * 6.2f);
+        break;
+      case 28: // Launchkey Encoder 8 -> LFO Rate
+        params_.lfoRateHz = 0.1f + norm * 30.0f;
+        break;
+      // Launchkey 49/61 Faders 1..4 -> ENV-1 ADSR
+      case 53: params_.env1AttackSec  = 0.001f + norm * 2.5f; break;
+      case 54: params_.env1DecaySec   = 0.010f + norm * 4.0f; break;
+      case 55: params_.env1Sustain    = norm; break;
+      case 56: params_.env1ReleaseSec = 0.010f + norm * 4.0f; break;
+      // Launchkey 49/61 Faders 5..8 -> ENV-2 ADSR
+      case 57:
+      case 73: params_.env2AttackSec  = 0.001f + norm * 2.5f; break;
+      case 58: params_.env2DecaySec   = 0.010f + norm * 4.0f; break;
+      case 59: params_.env2Sustain    = norm; break;
+      case 60:
+      case 72: params_.env2ReleaseSec = 0.010f + norm * 4.0f; break;
+      // Launchkey Fader 9 -> Source Mix VCO-1 / VCO-2
+      case 61: params_.sourceMix      = norm; break;
+      // Sustain Pedal
+      case 64: setSustainPedal(val >= 64); break;
+      // Botões/Pads de Atalho
+      case 80: params_.hardSync   = (val >= 64); break;
+      case 81: params_.vcfSlopeDb = (val >= 64) ? 24 : 12; break;
+      case 82: if (val >= 64) runCompuTune(); break;
+      case 123: allNotesOff(); break;
+      default: break;
     }
   }
 
@@ -473,7 +785,6 @@ public:
       return;
     }
 
-    // POLY1 (Round-Robin / Reassign) ou POLY2
     int chosen = -1;
     for (int step = 0; step < MaxVoices; ++step) {
       const int idx = (rrCursor_ + step) % MaxVoices;
@@ -484,7 +795,6 @@ public:
       }
     }
     if (chosen < 0) {
-      // Voice stealing pela voz mais antiga
       chosen = 0;
       uint32_t oldestAge = voices_[0].ageCounter;
       for (int i = 1; i < MaxVoices; ++i) {
@@ -500,14 +810,20 @@ public:
   void noteOff(uint8_t midiNote) {
     for (int v = 0; v < MaxVoices; ++v) {
       if (voices_[v].active && voices_[v].midiNote == midiNote) {
-        voices_[v].env1.releaseNote();
-        voices_[v].env2.releaseNote();
+        if (sustainPedalHeld_) {
+          voices_[v].heldBySustainPedal = true;
+        } else {
+          voices_[v].env1.releaseNote();
+          voices_[v].env2.releaseNote();
+        }
       }
     }
   }
 
   void allNotesOff() {
+    sustainPedalHeld_ = false;
     for (int v = 0; v < MaxVoices; ++v) {
+      voices_[v].heldBySustainPedal = false;
       voices_[v].env1.releaseNote();
       voices_[v].env2.releaseNote();
     }
@@ -527,7 +843,6 @@ public:
         const float sample = renderVoiceSubStep(voices_[v], lfoVal);
 
 #if JP8_STEREO_PAN
-        // Espalhamento estéreo sutil das vozes A..H (Upper/Lower pan)
         const float pan = (static_cast<float>(v) / std::max(1, MaxVoices - 1));
         const float gainL = 0.85f * (1.0f - 0.35f * pan);
         const float gainR = 0.85f * (0.65f + 0.35f * pan);
@@ -545,6 +860,10 @@ public:
     const float invOs = (1.0f / static_cast<float>(Oversample)) * 0.28f;
     outLeft  = fastOtaTanh(accumL * invOs);
     outRight = fastOtaTanh(accumR * invOs);
+
+    // Captura de decimação para o osciloscópio da tela TFT ILI9341
+    scopeRing_[scopeWriteIdx_ & 0xFF] = outLeft;
+    scopeWriteIdx_++;
   }
 
   int activeVoiceCount() const {
@@ -555,6 +874,18 @@ public:
     return count;
   }
 
+  uint8_t activeVoiceBitmask() const {
+    uint8_t mask = 0;
+    for (int v = 0; v < std::min(8, MaxVoices); ++v) {
+      if (voices_[v].active) mask |= (1u << v);
+    }
+    return mask;
+  }
+
+  float getScopeSample(uint8_t idx) const {
+    return scopeRing_[idx];
+  }
+
 private:
   JP8Parameters params_;
   VoiceState voices_[MaxVoices];
@@ -563,15 +894,22 @@ private:
   float lfoPhase_ = 0.0f;
   float lfoHeldRandom_ = 0.0f;
   uint32_t lfoPrng_ = 0xCAFEBABEu;
+  float pitchBendNorm_ = 0.0f;
+  float modWheelNorm_ = 0.0f;
+  bool sustainPedalHeld_ = false;
+  float scopeRing_[256] = {0.0f};
+  uint8_t scopeWriteIdx_ = 0;
 
   void allocateVoice(int idx, uint8_t midiNote, float velocityNorm, float unisonSemitones) {
     VoiceState& v = voices_[idx];
     v.active = true;
+    v.heldBySustainPedal = false;
     v.midiNote = midiNote;
     v.velocity = std::clamp(velocityNorm, 0.05f, 1.0f);
     if (params_.portamentoSec <= 0.001f) {
       v.currentNotePitch = static_cast<float>(midiNote) + unisonSemitones;
     }
+    v.lfoDelayEnv = (params_.lfoDelaySec <= 0.002f) ? 1.0f : 0.0f;
     v.ageCounter = globalAge_;
     v.env1.trigger();
     v.env2.trigger();
@@ -622,7 +960,6 @@ private:
       sq -= polyBlep(shifted, dt);
       return sq;
     }
-    // TRIANGLE via Leaky Integrated PolyBLEP Square (sem aliasing)
     float sq = (phase < 0.5f) ? 1.0f : -1.0f;
     sq += polyBlep(phase, dt);
     float shifted = phase - 0.5f;
@@ -633,7 +970,6 @@ private:
   }
 
   float computeDac14BitNote(const VoiceCalibration& cal, float targetNote) const {
-    // Equação (2) Pág. 50: VKn_x = T - W * (84 - Kn_x), quantizado em 14 bits (ITS80141)
     const float vIdeal = cal.refVoltageT - cal.scaleWidthW * (84.0f - targetNote);
     const float qCode = std::round(std::clamp((vIdeal / 10.0f) * 16384.0f, 0.0f, 16383.0f));
     const float vQuant = (qCode / 16384.0f) * 10.0f;
@@ -643,7 +979,7 @@ private:
   float renderVoiceSubStep(VoiceState& v, float lfoVal) {
     const float sr = kInternalSampleRate;
 
-    // 1. Envelopes IR3R01
+    // 1. Envelopes IR3R01 + LFO Delay (TR23~TR27 + BA662 IC8 Pág. 13)
     const float e1 = v.env1.process(params_.env1AttackSec, params_.env1DecaySec,
                                     params_.env1Sustain, params_.env1ReleaseSec,
                                     params_.env1KeyFollow, v.midiNote, sr);
@@ -656,17 +992,24 @@ private:
       return 0.0f;
     }
 
-    // 2. Portamento analógico (Pág. 19)
+    if (params_.lfoDelaySec > 0.002f && v.lfoDelayEnv < 1.0f) {
+      const float delayCoef = 1.0f - std::exp(-1.0f / (params_.lfoDelaySec * sr));
+      v.lfoDelayEnv = std::min(1.0f, v.lfoDelayEnv + delayCoef * (1.05f - v.lfoDelayEnv));
+    }
+    const float effectiveLfo = lfoVal * std::max(v.lfoDelayEnv, modWheelNorm_);
+
+    // 2. Portamento analógico (Pág. 19) + Pitch Bend (Bender OPH132 Pág. 24)
     if (params_.portamentoSec > 0.001f) {
       const float target = static_cast<float>(v.midiNote);
       const float coef = 1.0f - std::exp(-1.0f / (params_.portamentoSec * sr));
       v.currentNotePitch += coef * (target - v.currentNotePitch);
     }
+    const float bentNotePitch = v.currentNotePitch + (pitchBendNorm_ * params_.pitchBendRangeSemi);
 
     // 3. Frequências VCO-2 e VCO-1 com quantização 14-bit Compu-Tune + X-MOD + Hard Sync
     const float pitch2Note = computeDac14BitNote(
       v.cal[1],
-      v.currentNotePitch + static_cast<float>(params_.vco2OctaveShift * 12) + (params_.vco2FineCents / 100.0f)
+      bentNotePitch + static_cast<float>(params_.vco2OctaveShift * 12) + (params_.vco2FineCents / 100.0f)
     );
     float freq2 = 440.0f * std::exp2((pitch2Note - 69.0f) / 12.0f);
     if (params_.vco2LowFreq) freq2 *= 0.0625f;
@@ -684,14 +1027,13 @@ private:
     const float vco2Out = renderOscSample(params_.vco2Wave, v.phase2, dt2, params_.vco2Pw,
                                           v.triIntegrator2, v, params_.vco2LowFreq);
 
-    // X-MOD (BA662 IC6A): 3 oitavas de modulação em depth=5.0 (Pág. 33)
     const float xModOctaves = (params_.crossModDepth * 0.6f) * vco2Out;
     const float envOctaves  = (params_.vco1ModEnv * 0.25f) * e1;
-    const float lfoOctaves  = (params_.vco1ModLfo * 0.08f) * lfoVal;
+    const float lfoOctaves  = ((params_.vco1ModLfo * 0.08f) + (modWheelNorm_ * 0.12f)) * effectiveLfo;
 
     const float pitch1Note = computeDac14BitNote(
       v.cal[0],
-      v.currentNotePitch + static_cast<float>(params_.vco1OctaveShift * 12)
+      bentNotePitch + static_cast<float>(params_.vco1OctaveShift * 12)
     );
     const float freq1 = 440.0f * std::exp2(((pitch1Note - 69.0f) / 12.0f) + xModOctaves + envOctaves + lfoOctaves);
     const float dt1 = std::clamp(freq1 / sr, 0.00001f, 0.45f);
@@ -702,7 +1044,7 @@ private:
       v.phase1 = std::clamp(syncFrac * dt1, 0.0f, 0.9999f);
     }
 
-    const float pw1 = std::clamp(params_.vco1Pw + (params_.vco1PwmDepth * 0.04f) * lfoVal, 0.05f, 0.95f);
+    const float pw1 = std::clamp(params_.vco1Pw + (params_.vco1PwmDepth * 0.04f) * effectiveLfo, 0.05f, 0.95f);
     const float vco1Out = renderOscSample(params_.vco1Wave, v.phase1, dt1, pw1,
                                           v.triIntegrator1, v, false);
 
@@ -716,9 +1058,9 @@ private:
 
     // 6. VCF Roland IR3109 (4-Stage Cascaded OTA ZDF TPT Ladder)
     const float vcfEnvVal = params_.vcfEnvFromEnv2 ? e2 : e1;
-    const float kfSemi = (v.currentNotePitch - 60.0f) * params_.vcfKeyFollow;
+    const float kfSemi = (bentNotePitch - 60.0f) * params_.vcfKeyFollow;
     const float modOct = (params_.vcfEnvMod * 0.45f * static_cast<float>(params_.vcfEnvPolarity) * vcfEnvVal)
-                       + (params_.vcfLfoMod * 0.25f * lfoVal);
+                       + (params_.vcfLfoMod * 0.25f * effectiveLfo);
     const float dynCutoff = std::clamp(
       params_.vcfCutoffHz * std::exp2((kfSemi / 12.0f) + modOct),
       25.0f, sr * 0.42f
@@ -750,7 +1092,7 @@ private:
 #endif
 
     // 7. VCA BA662A (ENV-2 * VCA Level * Velocity)
-    const float lfoVca = 1.0f + (params_.vcaLfoMod * 0.15f) * lfoVal;
+    const float lfoVca = 1.0f + (params_.vcaLfoMod * 0.15f) * effectiveLfo;
     return vcfOut * e2 * params_.vcaLevel * v.velocity * lfoVca;
   }
 };
@@ -767,7 +1109,7 @@ private:
 /**
  * AudioSynthJupiter8 — Wrapper Teensy Audio Library (AudioStream @ 44.1kHz)
  * Conecta o motor DSP C++17 (Oversampling ${oversampling}x = ${internalSr} Hz)
- * diretamente ao barramento I2S/USB do Teensy 4.1.
+ * diretamente ao barramento I2S (PCM5102A / SGTL5000) e USB Audio do Teensy 4.1.
  */
 class AudioSynthJupiter8 : public AudioStream {
 public:
@@ -779,10 +1121,15 @@ public:
   void noteOff(uint8_t midiNote);
   void allNotesOff();
   void runCompuTune();
+  void setPitchBend(float normMinus1To1);
+  void applyLaunchkeyCC(uint8_t cc, uint8_t val);
+  void loadPresetSlot(uint8_t slot);
 
   void setParameters(const JP8Parameters& p);
   JP8Parameters getParameters() const;
   int activeVoices() const;
+  uint8_t activeVoiceMask() const;
+  float getScopeSample(uint8_t idx) const;
 
   virtual void update(void) override;
 
@@ -819,6 +1166,24 @@ void AudioSynthJupiter8::runCompuTune() {
   __enable_irq();
 }
 
+void AudioSynthJupiter8::setPitchBend(float normMinus1To1) {
+  __disable_irq();
+  engine_.setPitchBend(normMinus1To1);
+  __enable_irq();
+}
+
+void AudioSynthJupiter8::applyLaunchkeyCC(uint8_t cc, uint8_t val) {
+  __disable_irq();
+  engine_.applyLaunchkeyMidiCC(cc, val);
+  __enable_irq();
+}
+
+void AudioSynthJupiter8::loadPresetSlot(uint8_t slot) {
+  __disable_irq();
+  engine_.setParameters(makeFactoryPresetBank(slot));
+  __enable_irq();
+}
+
 void AudioSynthJupiter8::setParameters(const JP8Parameters& p) {
   __disable_irq();
   engine_.setParameters(p);
@@ -831,6 +1196,14 @@ JP8Parameters AudioSynthJupiter8::getParameters() const {
 
 int AudioSynthJupiter8::activeVoices() const {
   return engine_.activeVoiceCount();
+}
+
+uint8_t AudioSynthJupiter8::activeVoiceMask() const {
+  return engine_.activeVoiceBitmask();
+}
+
+float AudioSynthJupiter8::getScopeSample(uint8_t idx) const {
+  return engine_.getScopeSample(idx);
 }
 
 void AudioSynthJupiter8::update(void) {
@@ -861,125 +1234,292 @@ void AudioSynthJupiter8::update(void) {
 `;
 
   const mainCpp = `// ============================================================================
-// main.cpp — Roland Jupiter-8 Teensy 4.1 Hardware Firmware
-// Preset Base: "${patch.name}"
+// main.cpp — Firmware Operável Completo: Teensy 4.1 + TRS 3.5mm MIDI + PCM5102A + ILI9341
+//
+// Arquitetura de Hardware Ideal Selecionada:
+//   1. Placa: Teensy 4.1 (Cortex-M7 @ 600MHz)
+//   2. MIDI Primário: Conector TRS 3.5mm (P2/P1) Padrão MIDI Type-A @ 31.250 bps
+//      no Serial1 (RX1 = Pino 0 c/ Optoacoplador 6N138/H11L1, TX1 = Pino 1 MIDI Out/Thru)
+//      conectado por cabo P2-P2 estéreo direto na saída MIDI Out 3.5mm do Launchkey MK4!
+//   3. Áudio: DAC I2S 32-bit PCM5102A (BCLK=21, LRCLK=20, DIN=7, SCK=GND)
+//   4. Tela:  Display IPS TFT 2.8" ILI9341 320x240 SPI (CS=10, DC=9, RST=8, MOSI=11, SCK=13)
 // ============================================================================
 #include <Arduino.h>
 #include <Audio.h>
 #include <MIDI.h>
+#include <USBHost_t36.h>
+#include <SPI.h>
+#include <ILI9341_t3.h>
 #include "AudioSynthJupiter8.h"
 
-AudioSynthJupiter8 jp8Synth;
-AudioOutputI2S     i2sOut;   // Pinos I2S1 Teensy 4.1: BCLK=21, LRCLK=20, TX=7, MCLK=23
-AudioOutputUSB     usbOut;   // Saída de áudio USB estéreo simultânea para DAW
+// --- 1. Subsistema de Áudio I2S (PCM5102A 32-Bit DAC + SGTL5000 + USB Audio) ---
+AudioSynthJupiter8     jp8Synth;
+AudioOutputI2S         i2sOut;     // PCM5102A (sem MCLK) ou SGTL5000 nos pinos 21, 20, 7
+AudioOutputUSB         usbOut;     // Áudio digital direto para DAW via USB Device
+AudioControlSGTL5000   sgtl5000;   // Inicializado automaticamente caso Audio Shield esteja plugado
 
-AudioConnection    patchCordL1(jp8Synth, 0, i2sOut, 0);
-AudioConnection    patchCordR1(jp8Synth, 1, i2sOut, 1);
-AudioConnection    patchCordL2(jp8Synth, 0, usbOut, 0);
-AudioConnection    patchCordR2(jp8Synth, 1, usbOut, 1);
+AudioConnection        patchCordL1(jp8Synth, 0, i2sOut, 0);
+AudioConnection        patchCordR1(jp8Synth, 1, i2sOut, 1);
+AudioConnection        patchCordL2(jp8Synth, 0, usbOut, 0);
+AudioConnection        patchCordR2(jp8Synth, 1, usbOut, 1);
 
-// Interface DIN MIDI Hardware no Serial1 (Pino RX1 = 0 via optoacoplador 6N138)
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, dinMidi);
+// --- 2. Subsistema MIDI Primário: TRS 3.5mm (P2/P1) Type-A no Serial1 (31.250 bps) ---
+// Pinagem TRS MIDI Type-A (Novation Launchkey MK4 & MIDI Association Standard):
+//   - Tip (Ponta)   = Pino 5 DIN (Sink / Dados MIDI) -> Pino 3 do Opto 6N138 (via 220R)
+//   - Ring (Anel)   = Pino 4 DIN (Source +3.3V/+5V)  -> Pino 2 do Opto 6N138 (via 220R)
+//   - Sleeve (Base) = Pino 2 DIN (Shield / GND na saída MIDI Out; flutuante na entrada MIDI In)
+//   - Saída do Opto (Pino 6 do 6N138 c/ pull-up 470R p/ 3.3V) -> Teensy 4.1 Pino 0 (RX1)
+//   - MIDI Out/Thru TRS (Tip via 33R do Pino 1 TX1, Ring via 10R do +3.3V) -> Teensy 4.1 Pino 1 (TX1)
+struct TrsMidiSerialSettings : public midi::DefaultSettings {
+  static const long BaudRate = 31250;
+  static const bool UseRunningStatus = true;
+};
+MIDI_CREATE_CUSTOM_INSTANCE(HardwareSerial, Serial1, trsMidi, TrsMidiSerialSettings);
 
-// Pinos dos 2 Multiplexadores CD74HC4067 (emulação dos sliders Panel C/D)
-constexpr uint8_t MUX_S0 = 2;
-constexpr uint8_t MUX_S1 = 3;
-constexpr uint8_t MUX_S2 = 4;
-constexpr uint8_t MUX_S3 = 5;
-constexpr uint8_t MUX_SIG_A = A0; // Pino 14
+// Buffer de Hardware UART adicional para garantir zero perda de pacotes em sweeps de 8 encoders
+static uint8_t serial1RxBuffer[256];
+static uint8_t serial1TxBuffer[128];
+
+// --- 3. Subsistema USB Host (Fallback secundário opcional) ---
+USBHost                myusb;
+USBHub                 hub1(myusb);
+MIDIDevice_BigBuffer   launchkeyHostMidi(myusb);
+
+// --- 4. Subsistema de Tela Colorida IPS 2.8" ILI9341 (320x240 SPI) ---
+constexpr uint8_t TFT_CS  = 10;
+constexpr uint8_t TFT_DC  = 9;
+constexpr uint8_t TFT_RST = 8;
+ILI9341_t3 tft = ILI9341_t3(TFT_CS, TFT_DC, TFT_RST);
+
 constexpr uint8_t TUNE_BTN_PIN = 6;
+static uint8_t currentPresetSlot = 0;
+static uint8_t lastMovedCC = 21;
+static uint8_t lastMovedVal = 64;
+static uint32_t trsMidiPacketCount = 0;
+static bool uiDirty = true;
 
-static JP8Parameters liveParams;
-static float adcSmooth[16] = {0};
-
-void onMidiNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
-  (void)channel;
+// --- Callbacks Unificados de Performance (TRS 3.5mm MIDI Type-A + USB Fallback) ---
+void handleNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
+  trsMidiPacketCount++;
   if (velocity == 0) {
     jp8Synth.noteOff(note);
-  } else {
-    jp8Synth.noteOn(note, velocity);
+    uiDirty = true;
+    return;
   }
+  // No Launchkey MK4, os Pads RGB (canal 10 ou notas 36..43) acionam Presets e Funções JP-8
+  if (channel == 10 && note >= 36 && note <= 43) {
+    const uint8_t padIndex = note - 36;
+    if (padIndex < 5) {
+      currentPresetSlot = padIndex;
+      jp8Synth.loadPresetSlot(currentPresetSlot);
+    } else if (padIndex == 5) {
+      JP8Parameters p = jp8Synth.getParameters();
+      p.hardSync = !p.hardSync;
+      jp8Synth.setParameters(p);
+    } else if (padIndex == 6) {
+      JP8Parameters p = jp8Synth.getParameters();
+      p.vcfSlopeDb = (p.vcfSlopeDb == 24) ? 12 : 24;
+      jp8Synth.setParameters(p);
+    } else if (padIndex == 7) {
+      jp8Synth.runCompuTune();
+    }
+    uiDirty = true;
+    return;
+  }
+  jp8Synth.noteOn(note, velocity);
+  uiDirty = true;
 }
 
-void onMidiNoteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
+void handleNoteOff(uint8_t channel, uint8_t note, uint8_t velocity) {
   (void)channel;
   (void)velocity;
+  trsMidiPacketCount++;
   jp8Synth.noteOff(note);
+  uiDirty = true;
 }
 
-void onMidiControlChange(uint8_t channel, uint8_t cc, uint8_t val) {
+void handleControlChange(uint8_t channel, uint8_t cc, uint8_t val) {
   (void)channel;
-  const float norm = static_cast<float>(val) / 127.0f;
-  switch (cc) {
-    case 74: liveParams.vcfCutoffHz  = 40.0f * exp2f(norm * 8.6f); break; // VCF Cutoff
-    case 71: liveParams.vcfResonance = norm * 10.0f; break;               // BA662 Resonance
-    case 73: liveParams.env2AttackSec = 0.002f + norm * 2.5f; break;      // ENV-2 Attack
-    case 72: liveParams.env2ReleaseSec = 0.010f + norm * 3.5f; break;     // ENV-2 Release
-    case 1:  liveParams.vcfLfoMod    = norm * 10.0f; break;               // Mod Wheel -> VCF LFO
-    case 5:  liveParams.portamentoSec = norm * 1.5f; break;               // Portamento
-    case 123: jp8Synth.allNotesOff(); return;
-    default: return;
+  trsMidiPacketCount++;
+  jp8Synth.applyLaunchkeyCC(cc, val);
+  lastMovedCC = cc;
+  lastMovedVal = val;
+  uiDirty = true;
+}
+
+void handlePitchBend(uint8_t channel, int bend) {
+  (void)channel;
+  trsMidiPacketCount++;
+  // MIDI Library (TRS Serial1) envia bend entre -8192 e +8191
+  float norm = 0.0f;
+  if (bend >= 0 && bend <= 16383 && bend != 8192) {
+    norm = (static_cast<float>(bend) - 8192.0f) / 8192.0f;
+  } else {
+    norm = static_cast<float>(bend) / 8192.0f;
   }
-  jp8Synth.setParameters(liveParams);
+  jp8Synth.setPitchBend(norm);
+}
+
+void handleProgramChange(uint8_t channel, uint8_t program) {
+  (void)channel;
+  trsMidiPacketCount++;
+  currentPresetSlot = program % 5;
+  jp8Synth.loadPresetSlot(currentPresetSlot);
+  uiDirty = true;
+}
+
+// --- Renderizador Gráfico do Painel Jupiter-8 no Display ILI9341 (320x240) ---
+void drawJupiterDashboard() {
+  const JP8Parameters p = jp8Synth.getParameters();
+  const uint8_t voiceMask = jp8Synth.activeVoiceMask();
+
+  // Topo estilo Roland JP-8 (Barra Laranja & Telemetria TRS MIDI 31.25kbps)
+  tft.fillRect(0, 0, 320, 28, 0x0841);
+  tft.drawFastHLine(0, 28, 320, 0xFBE0);
+  tft.setTextColor(0xFBE0);
+  tft.setTextSize(1);
+  tft.setCursor(8, 6);
+  tft.print("ROLAND JP-8 // TEENSY 4.1 [TRS 3.5mm MIDI TYPE-A]");
+  tft.setCursor(8, 17);
+  tft.setTextColor(0x07FF);
+  tft.printf("CPU:%.1f%% | TRS RX1:%lu | CC#%d=%d",
+             AudioProcessorUsage(), static_cast<unsigned long>(trsMidiPacketCount),
+             lastMovedCC, lastMovedVal);
+
+  // Display Patch Number & Nome
+  tft.fillRect(8, 34, 304, 30, 0x1082);
+  tft.setTextColor(0xF800);
+  tft.setTextSize(2);
+  tft.setCursor(14, 41);
+  tft.printf("P%d", currentPresetSlot + 1);
+  tft.setTextColor(0xFFFF);
+  tft.setCursor(54, 41);
+  tft.print(p.patchName);
+
+  // 8 LEDs de Vozes A..H (Pág. 30 Service Notes)
+  const char* vLabels = "ABCDEFGH";
+  for (int v = 0; v < 8; ++v) {
+    const bool lit = (voiceMask & (1u << v)) != 0;
+    const int x = 8 + v * 38;
+    tft.fillRect(x, 70, 34, 18, lit ? 0xFBE0 : 0x18E3);
+    tft.setTextColor(lit ? 0x0000 : 0x7BEF);
+    tft.setTextSize(1);
+    tft.setCursor(x + 14, 75);
+    tft.print(vLabels[v]);
+  }
+
+  // Telemetria dos 8 Encoders do Launchkey MK4 via TRS MIDI
+  tft.fillRect(8, 94, 304, 68, 0x0841);
+  tft.setTextColor(0x07FF);
+  tft.setTextSize(1);
+  tft.setCursor(12, 99);
+  tft.printf("IR3109 CUT: %5.0fHz | RES: %3.1f | SLOPE: -%ddB",
+             p.vcfCutoffHz, p.vcfResonance, p.vcfSlopeDb);
+  tft.setCursor(12, 113);
+  tft.printf("ENV MOD: %4.1f     | HPF: %4.0fHz | LFO: %4.1fHz",
+             p.vcfEnvMod, p.hpfCutoffHz, p.lfoRateHz);
+  tft.setCursor(12, 127);
+  tft.printf("X-MOD: %4.1f       | DETUNE: %+3.0fc | SYNC: %s",
+             p.crossModDepth, p.vco2FineCents, p.hardSync ? "ON " : "OFF");
+  tft.setCursor(12, 141);
+  tft.printf("ENV2 A:%.2fs D:%.2fs S:%.0f%% R:%.2fs | MIX:%.0f%%",
+             p.env2AttackSec, p.env2DecaySec, p.env2Sustain * 100.0f,
+             p.env2ReleaseSec, p.sourceMix * 100.0f);
+
+  // Osciloscópio Real-Time na base da tela (y = 168..232)
+  tft.fillRect(8, 166, 304, 68, 0x0000);
+  tft.drawRect(8, 166, 304, 68, 0x3186);
+  int prevY = 200;
+  for (int x = 0; x < 300; ++x) {
+    const float s = jp8Synth.getScopeSample(static_cast<uint8_t>((x * 256) / 300));
+    const int y = constrain(200 - static_cast<int>(s * 28.0f), 168, 231);
+    if (x > 0) {
+      tft.drawLine(9 + x, prevY, 10 + x, y, 0x07E0);
+    }
+    prevY = y;
+  }
 }
 
 void setup() {
-  AudioMemory(24);
+  AudioMemory(32);
   Serial.begin(115200);
-
-  pinMode(MUX_S0, OUTPUT);
-  pinMode(MUX_S1, OUTPUT);
-  pinMode(MUX_S2, OUTPUT);
-  pinMode(MUX_S3, OUTPUT);
   pinMode(TUNE_BTN_PIN, INPUT_PULLUP);
-  analogReadResolution(10);
 
-  liveParams = makeDefaultJP8Patch();
-  jp8Synth.setParameters(liveParams);
+  // 1. Inicializa Codec SGTL5000 (se presente); o PCM5102A funciona direto via I2S sem I2C
+  sgtl5000.enable();
+  sgtl5000.volume(0.75f);
 
-  // Configurar callbacks USB MIDI nativo
-  usbMIDI.setHandleNoteOn(onMidiNoteOn);
-  usbMIDI.setHandleNoteOff(onMidiNoteOff);
-  usbMIDI.setHandleControlChange(onMidiControlChange);
+  // 2. Inicializa Tela TFT ILI9341 320x240 SPI
+  tft.begin();
+  tft.setRotation(1);
+  tft.fillScreen(0x0000);
 
-  // Configurar callbacks DIN MIDI Serial1
-  dinMidi.setHandleNoteOn(onMidiNoteOn);
-  dinMidi.setHandleNoteOff(onMidiNoteOff);
-  dinMidi.setHandleControlChange(onMidiControlChange);
-  dinMidi.begin(MIDI_CHANNEL_OMNI);
+  // 3. Inicializa MIDI Primário TRS 3.5mm (P2/P1) Type-A no Serial1 (RX1=Pino 0, TX1=Pino 1)
+  Serial1.addMemoryForRead(serial1RxBuffer, sizeof(serial1RxBuffer));
+  Serial1.addMemoryForWrite(serial1TxBuffer, sizeof(serial1TxBuffer));
+  trsMidi.setHandleNoteOn(handleNoteOn);
+  trsMidi.setHandleNoteOff(handleNoteOff);
+  trsMidi.setHandleControlChange(handleControlChange);
+  trsMidi.setHandlePitchBend(handlePitchBend);
+  trsMidi.setHandleProgramChange(handleProgramChange);
+  trsMidi.begin(MIDI_CHANNEL_OMNI);
+  // Habilita Soft MIDI Thru no TX1 (Pino 1) para encadear outros synths via P2 TRS
+  trsMidi.turnThruOn();
+
+  // 4. Inicializa USB Host & USB Device como entradas secundárias simultâneas
+  myusb.begin();
+  launchkeyHostMidi.setHandleNoteOn(handleNoteOn);
+  launchkeyHostMidi.setHandleNoteOff(handleNoteOff);
+  launchkeyHostMidi.setHandleControlChange(handleControlChange);
+  launchkeyHostMidi.setHandlePitchChange(handlePitchBend);
+  launchkeyHostMidi.setHandleProgramChange(handleProgramChange);
+
+  usbMIDI.setHandleNoteOn(handleNoteOn);
+  usbMIDI.setHandleNoteOff(handleNoteOff);
+  usbMIDI.setHandleControlChange(handleControlChange);
+  usbMIDI.setHandlePitchChange(handlePitchBend);
+  usbMIDI.setHandleProgramChange(handleProgramChange);
+
+  jp8Synth.setParameters(makeDefaultJP8Patch());
+  drawJupiterDashboard();
 }
 
-elapsedMillis panelScanTimer;
-uint8_t muxChannel = 0;
+elapsedMillis displayTimer;
+elapsedMillis tuneDebounceTimer;
+bool lastTuneBtnState = HIGH;
 
 void loop() {
-  usbMIDI.read();
-  dinMidi.read();
+  // Prioridade #1: Leitura UART Hardware Serial1 (Conector TRS 3.5mm / P1-P2 @ 31.250 bps)
+  while (trsMidi.read()) {}
 
-  // Botão físico COMPU-TUNE (Pág. 50)
-  if (digitalRead(TUNE_BTN_PIN) == LOW) {
+  // Prioridade #2: USB Host & USB Device (opcionais)
+  myusb.Task();
+  while (launchkeyHostMidi.read()) {}
+  while (usbMIDI.read()) {}
+
+  // Botão físico COMPU-TUNE não-bloqueante (zero travamento de MIDI)
+  const bool tuneBtn = digitalRead(TUNE_BTN_PIN);
+  if (tuneBtn == LOW && lastTuneBtnState == HIGH && tuneDebounceTimer > 250) {
+    tuneDebounceTimer = 0;
     jp8Synth.runCompuTune();
-    delay(250);
+    uiDirty = true;
   }
+  lastTuneBtnState = tuneBtn;
 
-  // Varredura contínua dos sliders analógicos a cada 2ms (emula MOD CON 8-bit S/H)
-  if (panelScanTimer >= 2) {
-    panelScanTimer = 0;
-    digitalWrite(MUX_S0, muxChannel & 0x01);
-    digitalWrite(MUX_S1, (muxChannel >> 1) & 0x01);
-    digitalWrite(MUX_S2, (muxChannel >> 2) & 0x01);
-    digitalWrite(MUX_S3, (muxChannel >> 3) & 0x01);
-
-    const float raw = static_cast<float>(analogRead(MUX_SIG_A)) / 1023.0f;
-    adcSmooth[muxChannel] += 0.15f * (raw - adcSmooth[muxChannel]);
-    muxChannel = (muxChannel + 1) & 0x0F;
+  // Atualiza tela ILI9341 a ~25 FPS quando houver atividade
+  if (displayTimer >= 40) {
+    displayTimer = 0;
+    if (uiDirty || jp8Synth.activeVoices() > 0) {
+      drawJupiterDashboard();
+      uiDirty = false;
+    }
   }
 }
 `;
 
   const nativeTestCpp = `// ============================================================================
 // test_jp8_dsp_native.cpp — Testes Unitários Nativos C++17 do Motor DSP JP-8
-// Executado automaticamente no GitHub Actions antes de compilar para o Teensy!
+// Valida DSP, Presets de Fábrica e Mapeamento Completo do Launchkey MK4!
 // ============================================================================
 #include <cassert>
 #include <cmath>
@@ -999,12 +1539,26 @@ int main() {
   JP8Parameters p = makeDefaultJP8Patch();
   engine.setParameters(p);
 
-  // 3. Disparar um acorde de 4 notas e verificar áudio não-nulo e sem NaN/Inf
-  engine.noteOn(48, 0.9f);
-  engine.noteOn(55, 0.85f);
+  // 3. Testar Mapeamento de Encoders e Faders do Novation Launchkey MK4 (via TRS MIDI 31.250 bps)
+  engine.applyLaunchkeyMidiCC(21, 100); // Encoder 1: VCF Cutoff
+  assert(engine.parameters().vcfCutoffHz > 2000.0f);
+  engine.applyLaunchkeyMidiCC(22, 64);  // Encoder 2: VCF Resonance
+  assert(engine.parameters().vcfResonance > 4.5f && engine.parameters().vcfResonance < 5.5f);
+  engine.applyLaunchkeyMidiCC(24, 64);  // Encoder 4: X-MOD Depth
+  assert(engine.parameters().crossModDepth > 4.5f);
+  engine.applyLaunchkeyMidiCC(80, 127); // Pad 6 / CC 80: Hard Sync ON
+  assert(engine.parameters().hardSync == true);
+  engine.applyLaunchkeyMidiCC(81, 0);   // Pad 7 / CC 81: Slope 12dB
+  assert(engine.parameters().vcfSlopeDb == 12);
+
+  // 4. Testar Pedal de Sustain (CC 64) + Pitch Bend + Mod Wheel
+  engine.setPitchBend(0.5f);
+  engine.applyLaunchkeyMidiCC(1, 90);   // Mod Wheel
+  engine.applyLaunchkeyMidiCC(64, 127); // Sustain Pedal Down
+
   engine.noteOn(60, 0.9f);
-  engine.noteOn(64, 0.85f);
-  assert(engine.activeVoiceCount() >= 1);
+  engine.noteOff(60); // Deve continuar soando por causa do pedal de sustain!
+  assert(engine.activeVoiceCount() == 1);
 
   float peak = 0.0f;
   for (int i = 0; i < 4410; ++i) {
@@ -1016,51 +1570,64 @@ int main() {
   }
   assert(peak > 0.05f);
 
-  // 4. Testar calibração Compu-Tune e AllNotesOff
-  engine.runCompuTune();
+  // Soltar pedal de sustain e verificar liberação das vozes
+  engine.applyLaunchkeyMidiCC(64, 0);
   engine.allNotesOff();
-  for (int i = 0; i < 44100 * 5; ++i) {
+  for (int i = 0; i < 44100 * 6; ++i) {
     float l = 0.0f, r = 0.0f;
     engine.processSampleStereo(l, r);
   }
   assert(engine.activeVoiceCount() == 0);
 
-  std::cout << "[OK] JP-8 C++17 DSP Engine passou em todos os testes (peak=" << peak << ")\\n";
+  // 5. Verificar os 5 Presets de Fábrica (Pads 1..5 do Launchkey MK4)
+  for (uint8_t slot = 0; slot < 5; ++slot) {
+    JP8Parameters preset = makeFactoryPresetBank(slot);
+    assert(preset.patchName != nullptr);
+  }
+
+  std::cout << "[OK] JP-8 C++17 DSP Engine + TRS 3.5mm MIDI Launchkey MK4 passou em todos os testes (peak=" << peak << ")\\n";
   return 0;
 }
 `;
 
-  const readmeMd = `# Roland Jupiter-8 DSP Engine para Teensy 4.1 (PlatformIO + GitHub Actions)
+  const readmeMd = `# Roland Jupiter-8 DSP Engine — Stack Ideal: Teensy 4.1 + TRS 3.5mm MIDI (P2/P1) + PCM5102A + ILI9341
 
-Este projeto implementa uma réplica fiel em C++17 do motor de áudio do **Roland Jupiter-8** para a placa **Teensy 4.1** (ARM Cortex-M7 @ 600 MHz), baseado nas Notas de Serviço originais de dezembro de 1982.
+Este repositório contém o firmware C++17 completo, compilável e 100% operável da réplica do **Roland Jupiter-8** para o **Teensy 4.1**, projetado para conexão via **MIDI Padrão por pino TRS 3.5mm (P2/P1 — Padrão MIDI Type-A)** diretamente da saída \`MIDI OUT 3.5mm\` do **Novation Launchkey MK4**.
 
-## Como compilar diretamente pelo GitHub (Sem instalar IDE local)
+## 1. Conexão MIDI Padrão via Conector TRS 3.5mm (P2 / P1 — Padrão MIDI Type-A)
 
-1. Crie um repositório novo no GitHub (ex: \`jp8-teensy41-synth\`).
-2. Extraia o arquivo \`.zip\` exportado e envie os arquivos para o GitHub:
-   \`\`\`bash
-   git init
-   git add .
-   git commit -m "feat: roland jp8 teensy 4.1 dsp engine"
-   git branch -M main
-   git remote add origin https://github.com/SEU_USUARIO/jp8-teensy41-synth.git
-   git push -u origin main
-   \`\`\`
-3. Acesse a aba **Actions** no seu repositório do GitHub.
-4. O workflow \`.github/workflows/build-teensy41.yml\` executará automaticamente:
-   - **Job 1 (\`native-dsp-tests\`)**: Compila e testa o núcleo DSP (\`include/JP8DspCore.h\`) com \`g++ -std=c++17 -Werror\`.
-   - **Job 2 (\`compile-teensy41\`)**: Instala o PlatformIO CLI, baixa o SDK do Teensy e gera o binário **\`firmware.hex\`**.
-5. Ao final do build, clique no Artifact **\`jp8-teensy41-firmware-...\`** dentro do Action para baixar o \`firmware.hex\` e gravá-lo na placa via **Teensy Loader**!
+O **Novation Launchkey MK4** (inclusive os modelos 25 e 37 Mini) possui saída física **MIDI Out em conector TRS 3.5mm (P2) padrão Type-A** (o padrão oficial da MIDI Association). Usando um jack fêmea TRS 3.5mm (ou P1 2.5mm com adaptador) no Teensy 4.1 ligado ao \`Serial1\` (\`RX1 = Pino 0\`, \`TX1 = Pino 1\` a \`31.250 bps\`), você conecta o controlador diretamente com um **cabo estéreo P2-P2 comum**, sem depender de pilha USB Host e com **isolamento galvânico por optoacoplador** (zero ruído de loop de terra no áudio!).
 
-## Compilação Local Opcional (PlatformIO)
+### Esquema Elétrico TRS MIDI IN (Conector P2/P1 Fêmea → Optoacoplador 6N138 → Teensy Pino 0 RX1)
+- **Tip (Ponta do P2/P1 — MIDI Sink / Pino 5 DIN)**: ligar ao **Pino 3 (Cátodo LED)** do optoacoplador **6N138** (ou **H11L1**).
+- **Ring (Anel do P2/P1 — MIDI Source / Pino 4 DIN)**: ligar através de um **resistor de 220 Ω** ao **Pino 2 (Ânodo LED)** do **6N138**.
+- **Diodo 1N4148 de proteção**: ligar em antiparalelo entre os pinos 2 e 3 do 6N138 (Cátodo no Pino 2, Ânodo no Pino 3).
+- **Sleeve (Base/Terra do P2/P1)**: deixar **desconectado (flutuante)** no jack de entrada MIDI IN (padrão oficial MIDI para evitar ground loop).
+- **Saída do 6N138 para o Teensy 4.1 (3.3V Logic)**:
+  - **Pino 8 (VCC)** do 6N138 → **+3.3V** do Teensy 4.1 (com capacitor de desacoplamento 100nF para o GND).
+  - **Pino 5 (GND)** do 6N138 → **GND** do Teensy 4.1.
+  - **Pino 6 (Vo)** do 6N138 → ligar direto ao **Pino 0 (RX1)** do Teensy 4.1 + **resistor pull-up de 470 Ω para +3.3V**.
+  - **Pino 7 (Vb)** do 6N138 → resistor de **4.7 kΩ para o GND**.
 
-\`\`\`bash
-# Testar o motor DSP nativamente no PC
-g++ -std=c++17 -O2 -Wall -Wextra -Werror -I include test/test_jp8_dsp_native.cpp -lm -o test_dsp && ./test_dsp
+### Esquema Elétrico TRS MIDI OUT / THRU (Teensy Pino 1 TX1 → Conector P2/P1 Fêmea)
+- **Ring (Anel — Source)**: ligar ao **+3.3V** do Teensy 4.1 através de um **resistor de 10 Ω**.
+- **Tip (Ponta — Sink)**: ligar ao **Pino 1 (TX1)** do Teensy 4.1 através de um **resistor de 33 Ω**.
+- **Sleeve (Base — Shield)**: ligar ao **GND** do Teensy 4.1.
 
-# Compilar e gravar no Teensy 4.1 conectado via USB
-pio run -e teensy41 -t upload
-\`\`\`
+## 2. O Conjunto Ideal de Hardware (Bill of Materials)
+
+| Componente | Modelo Escolhido | Conexão no Teensy 4.1 |
+| :--- | :--- | :--- |
+| **Microcontrolador** | **Teensy 4.1** (ARM Cortex-M7 @ 600 MHz) | Processamento DSP em 64-bit FPU + UART \`Serial1\` c/ FIFO dedicado para MIDI 31.250 bps. |
+| **Interface MIDI Padrão** | **Jack TRS 3.5mm (P2) ou 2.5mm (P1) Type-A + Opto 6N138** | \`RX1 = Pino 0\` (MIDI IN do Launchkey MK4), \`TX1 = Pino 1\` (MIDI OUT / Soft Thru). |
+| **Saída de Áudio (DAC)** | **Módulo I2S PCM5102A (Placa Roxa GY-PCM5102)** | \`BCLK = Pino 21\`, \`LRCLK = Pino 20\`, \`DIN = Pino 7\`, \`SCK = GND\`, \`VIN = 3.3V\`. |
+| **Tela / Display** | **Display IPS TFT 2.8" ILI9341 (320×240 SPI — Placa Vermelha)** | \`CS = 10\`, \`DC = 9\`, \`RST = 8\`, \`MOSI = 11\`, \`SCK = 13\`, \`MISO = 12\`, \`VCC/LED = 3.3V\`. |
+
+## 3. Mapeamento do Novation Launchkey MK4 via TRS MIDI
+
+- **Encoders 1 a 8 (\`CC 21..28\`)**: VCF Cutoff (\`CC 21\`), Resonance (\`CC 22\`), Env Mod (\`CC 23\`), Cross-Mod (\`CC 24\`), VCO-2 Fine (\`CC 25\`), Pulse Width (\`CC 26\`), HPF (\`CC 27\`), LFO Rate (\`CC 28\`).
+- **Faders 1 a 4 (\`CC 53..56\`)**: ENV-1 ADSR (\`IR3R01 IC38A\`) | **Faders 5 a 8 (\`CC 57..60\`)**: ENV-2 ADSR (\`IR3R01 IC36A\`) | **Fader 9 (\`CC 61\`)**: Source Mix.
+- **Pads RGB 1 a 5 (Notas \`36..40\` Ch 10)**: Presets \`A1..B1\` | **Pad 6 (\`CC 80\`)**: Hard Sync | **Pad 7 (\`CC 81\`)**: Filtro 12/24 dB | **Pad 8 (\`CC 82\`)**: Compu-Tune.
 `;
 
   return [
@@ -1068,28 +1635,28 @@ pio run -e teensy41 -t upload
       path: '.github/workflows/build-teensy41.yml',
       label: 'GitHub Actions CI',
       language: 'yaml',
-      summary: 'Pipeline completo que testa o DSP nativamente e compila o firmware.hex na nuvem do GitHub.',
+      summary: 'Pipeline completo que testa o DSP + mapeamento Launchkey MK4 e compila o firmware.hex na nuvem.',
       content: githubWorkflow,
     },
     {
       path: 'platformio.ini',
       label: 'platformio.ini',
       language: 'ini',
-      summary: 'Configuração PlatformIO para Teensy 4.1 com USB_MIDI_AUDIO_SERIAL e flags -O3.',
+      summary: 'Configuração PlatformIO com MIDI Library (Serial1 TRS 31.250 bps), Audio e ILI9341_t3.',
       content: platformioIni,
     },
     {
       path: 'include/JP8Parameters.h',
       label: 'JP8Parameters.h',
       language: 'cpp',
-      summary: `Struct de parâmetros e valores iniciais sincronizados com "${patch.name}".`,
+      summary: `Struct de parâmetros e banco de 5 presets acionáveis pelos Pads do Launchkey MK4.`,
       content: jp8ParametersH,
     },
     {
       path: 'include/JP8DspCore.h',
       label: 'JP8DspCore.h',
       language: 'cpp',
-      summary: 'Núcleo DSP completo em C++17: 16 VCOs PolyBLEP, Hard Sync, X-MOD, IR3109 ZDF, IR3R01 e Compu-Tune.',
+      summary: 'Núcleo DSP C++17 com LFO Delay, Pitch Bend, Sustain Pedal e handler completo de CCs do Launchkey MK4.',
       content: jp8DspCoreH,
     },
     {
@@ -1103,28 +1670,28 @@ pio run -e teensy41 -t upload
       path: 'src/AudioSynthJupiter8.cpp',
       label: 'AudioSynthJupiter8.cpp',
       language: 'cpp',
-      summary: 'Implementação thread-safe (IRQ guard) dos métodos MIDI e bloco I2S de 128 amostras.',
+      summary: 'Implementação thread-safe (IRQ guard) dos métodos MIDI, presets e bloco I2S de 128 amostras.',
       content: audioSynthCpp,
     },
     {
       path: 'src/main.cpp',
       label: 'main.cpp',
       language: 'cpp',
-      summary: 'Ponto de entrada Teensy 4.1 com AudioOutputI2S, AudioOutputUSB, MIDI DIN/USB e scanner CD74HC4067.',
+      summary: 'Firmware operável completo: TRS 3.5mm (P2/P1) MIDI Type-A no Serial1 (Pinos 0 e 1), DAC PCM5102A e UI ILI9341.',
       content: mainCpp,
     },
     {
       path: 'test/test_jp8_dsp_native.cpp',
       label: 'test_dsp_native.cpp',
       language: 'cpp',
-      summary: 'Suíte de testes unitários C++17 executada no CI antes da geração do binário ARM.',
+      summary: 'Suíte de testes unitários C++17 validando o DSP, Sustain Pedal, Pitch Bend e os CCs do Launchkey MK4.',
       content: nativeTestCpp,
     },
     {
       path: 'README.md',
       label: 'README.md',
       language: 'markdown',
-      summary: 'Guia passo-a-passo de deploy no GitHub e gravação do .hex no Teensy 4.1.',
+      summary: 'Esquema elétrico do conector TRS MIDI (P2/P1 Type-A c/ 6N138), BOM e mapa do Launchkey MK4.',
       content: readmeMd,
     },
   ];

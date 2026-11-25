@@ -26,6 +26,24 @@ void AudioSynthJupiter8::runCompuTune() {
   __enable_irq();
 }
 
+void AudioSynthJupiter8::setPitchBend(float normMinus1To1) {
+  __disable_irq();
+  engine_.setPitchBend(normMinus1To1);
+  __enable_irq();
+}
+
+void AudioSynthJupiter8::applyLaunchkeyCC(uint8_t cc, uint8_t val) {
+  __disable_irq();
+  engine_.applyLaunchkeyMidiCC(cc, val);
+  __enable_irq();
+}
+
+void AudioSynthJupiter8::loadPresetSlot(uint8_t slot) {
+  __disable_irq();
+  engine_.setParameters(makeFactoryPresetBank(slot));
+  __enable_irq();
+}
+
 void AudioSynthJupiter8::setParameters(const JP8Parameters& p) {
   __disable_irq();
   engine_.setParameters(p);
@@ -38,6 +56,14 @@ JP8Parameters AudioSynthJupiter8::getParameters() const {
 
 int AudioSynthJupiter8::activeVoices() const {
   return engine_.activeVoiceCount();
+}
+
+uint8_t AudioSynthJupiter8::activeVoiceMask() const {
+  return engine_.activeVoiceBitmask();
+}
+
+float AudioSynthJupiter8::getScopeSample(uint8_t idx) const {
+  return engine_.getScopeSample(idx);
 }
 
 void AudioSynthJupiter8::update(void) {
