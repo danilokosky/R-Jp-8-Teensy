@@ -1,0 +1,346 @@
+Run if [ -d "firmware/jp8_teensy41" ]; then
+********************************************************************************
+If you like PlatformIO, please:
+- star it on GitHub > https://github.com/platformio/platformio-core
+- follow us on LinkedIn to stay up-to-date on the latest project news > https://www.linkedin.com/company/platformio/
+- try PlatformIO IDE for embedded development > https://platformio.org/platformio-ide
+********************************************************************************
+
+Processing teensy41 (platform: teensy; board: teensy41; framework: arduino)
+--------------------------------------------------------------------------------
+Platform Manager: Installing teensy
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Platform Manager: teensy@6.0.0 has been installed!
+Tool Manager: Installing platformio/toolchain-gccarmnoneeabi-teensy @ ~1.150201.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: toolchain-gccarmnoneeabi-teensy@1.150201.0 has been installed!
+Tool Manager: Installing platformio/framework-arduinoteensy @ ~1.162.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: framework-arduinoteensy@1.162.0 has been installed!
+Tool Manager: Installing platformio/tool-teensy @ <2
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-teensy@1.162.0 has been installed!
+Tool Manager: Installing platformio/tool-scons @ ~4.41101.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-scons@4.41101.0 has been installed!
+Library Manager: Installing PaulStoffregen/Audio
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: Audio@1.3.0 has been installed!
+Library Manager: Installing fortyseveneffects/MIDI Library
+Downloading 0% 10% 20% 30% 40%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: MIDI Library@5.0.2 has been installed!
+Library Manager: Installing PaulStoffregen/USBHost_t36
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: USBHost_t36@0.2.0 has been installed!
+Library Manager: Installing adafruit/Adafruit GFX Library
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: Adafruit GFX Library@2.0.0 has been installed!
+Library Manager: Resolving dependencies...
+Library Manager: Installing Adafruit BusIO
+Downloading 0% 10% 20% 30%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: Adafruit BusIO@1.17.4 has been installed!
+Library Manager: Installing PaulStoffregen/ILI9341_t3
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: ILI9341_t3@0.0.0-alpha+sha.ff4bba3e15 has been installed!
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/teensy/teensy41.html
+PLATFORM: Teensy (6.0.0) > Teensy 4.1
+HARDWARE: IMXRT1062 600MHz, 512KB RAM, 7.75MB Flash
+DEBUG: Current (jlink) External (jlink)
+PACKAGES: 
+ - framework-arduinoteensy @ 1.162.0 (1.62) 
+ - tool-teensy @ 1.162.0 (1.62) 
+ - toolchain-gccarmnoneeabi-teensy @ 1.150201.0 (15.2.1)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 98 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- Audio @ 1.3.0
+|-- MIDI Library @ 5.0.2
+|-- USBHost_t36 @ 0.2.0
+|-- Adafruit GFX Library @ 2.0.0
+|-- ILI9341_t3 @ 0.0.0-alpha+sha.ff4bba3e15
+|-- SPI @ 1.0
+Building in release mode
+Compiling .pio/build/teensy41/src/AudioSynthJupiter8.cpp.o
+Compiling .pio/build/teensy41/src/main.cpp.o
+Compiling .pio/build/teensy41/libc55/Wire/Wire.cpp.o
+Compiling .pio/build/teensy41/libc55/Wire/WireIMXRT.cpp.o
+Compiling .pio/build/teensy41/libc55/Wire/WireKinetis.cpp.o
+In file included from .pio/libdeps/teensy41/Audio/effect_envelope.h:30,
+                 from .pio/libdeps/teensy41/Audio/Audio.h:72,
+                 from src/main.cpp:13:
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_saturate_rshift(int32_t, int, int)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:51:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   51 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_multiply_32x16b(int32_t, uint32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:64:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   64 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_multiply_32x16t(int32_t, uint32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:77:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   77 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16t_16t(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:127:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  127 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16t_16b(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:140:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  140 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16b_16b(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:153:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  153 | }
+      | ^
+In file included from src/main.cpp:17:
+/home/runner/.platformio/packages/toolchain-gccarmnoneeabi-teensy/arm-none-eabi/include/c++/15.2.1/bits/stl_algo.h: In function '_RandomAccessIterator std::_V2::__rotate(_RandomAccessIterator, _RandomAccessIterator, _RandomAccessIterator, std::random_access_iterator_tag)':
+.pio/libdeps/teensy41/ILI9341_t3/ILI9341_t3.h:557:20: warning: expected unqualified-id before '{' token [-Wtemplate-body]
+  557 | #define swap(a, b) { typeof(a) t = a; a = b; b = t; }
+      |                    ^
+.pio/libdeps/teensy41/ILI9341_t3/ILI9341_t3.h:557:20: warning: expected unqualified-id before '{' token [-Wtemplate-body]
+  557 | #define swap(a, b) { typeof(a) t = a; a = b; b = t; }
+      |                    ^
+Compiling .pio/build/teensy41/libc55/Wire/utility/twi.c.o
+Compiling .pio/build/teensy41/lib05a/SPI/SPI.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatDbg.cpp.o
+Archiving .pio/build/teensy41/libc55/libWire.a
+Indexing .pio/build/teensy41/libc55/libWire.a
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatFile.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatFilePrint.cpp.o
+Archiving .pio/build/teensy41/lib05a/libSPI.a
+Indexing .pio/build/teensy41/lib05a/libSPI.a
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatFileWrite.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatFormatter.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatName.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatPartition.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/ExFatVolume.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/ExFatLib/upcase.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatDbg.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatFile.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatFileLFN.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatFilePrint.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatFileSFN.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatFormatter.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatName.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatPartition.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FatLib/FatVolume.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FreeStack.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FsLib/FsFile.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FsLib/FsNew.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/FsLib/FsVolume.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/MinimumSerial.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SdCard/SdCardInfo.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SdCard/SdSpiCard.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SdCard/SdioTeensy.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiArtemis.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiChipSelect.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiDue.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiESP.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiParticle.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiSTM32.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiSTM32Core.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/SpiDriver/SdSpiTeensy3.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FmtNumber.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FsCache.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FsDateTime.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FsName.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FsStructs.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/FsUtf.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/PrintBasic.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/common/upcase.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/iostream/StdioStream.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/iostream/StreamBaseClass.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/iostream/istream.cpp.o
+Compiling .pio/build/teensy41/lib004/SdFat/iostream/ostream.cpp.o
+Compiling .pio/build/teensy41/libf38/SD/SD.cpp.o
+Compiling .pio/build/teensy41/lib31d/SerialFlash/SerialFlashChip.cpp.o
+Compiling .pio/build/teensy41/lib31d/SerialFlash/SerialFlashDirectory.cpp.o
+Archiving .pio/build/teensy41/lib004/libSdFat.a
+Indexing .pio/build/teensy41/lib004/libSdFat.a
+Compiling .pio/build/teensy41/lib701/Audio/analyze_fft1024.cpp.o
+In file included from .pio/libdeps/teensy41/Audio/analyze_fft1024.h:30,
+                 from .pio/libdeps/teensy41/Audio/analyze_fft1024.cpp:27:
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:73:9: error: 'uint8_t' does not name a type
+   73 |         uint8_t  ref_count;
+      |         ^~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:37:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   36 | #include <string.h> // for memcpy
+  +++ |+#include <cstdint>
+   37 | 
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:74:9: error: 'uint8_t' does not name a type
+   74 |         uint8_t  reserved1;
+      |         ^~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:74:9: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:75:9: error: 'uint16_t' does not name a type
+   75 |         uint16_t memory_pool_index;
+      |         ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:75:9: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:76:9: error: 'int16_t' does not name a type
+   76 |         int16_t  data[AUDIO_BLOCK_SAMPLES];
+      |         ^~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:76:9: note: 'int16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:153:9: error: 'uint16_t' does not name a type
+  153 |         uint16_t cpu_cycles;
+      |         ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:153:9: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:154:9: error: 'uint16_t' does not name a type
+  154 |         uint16_t cpu_cycles_max;
+      |         ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:154:9: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:155:16: error: 'uint16_t' does not name a type
+  155 |         static uint16_t cpu_cycles_total;
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:155:16: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:156:16: error: 'uint16_t' does not name a type
+  156 |         static uint16_t cpu_cycles_total_max;
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:156:16: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:157:16: error: 'uint16_t' does not name a type
+  157 |         static uint16_t memory_used;
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:157:16: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:158:16: error: 'uint16_t' does not name a type
+  158 |         static uint16_t memory_used_max;
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:158:16: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:175:9: error: 'uint8_t' does not name a type
+  175 |         uint8_t numConnections;
+      |         ^~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:175:9: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:185:16: error: 'uint32_t' does not name a type
+  185 |         static uint32_t memory_pool_available_mask[];
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:185:16: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:186:16: error: 'uint16_t' does not name a type
+  186 |         static uint16_t memory_pool_first_mask;
+      |                ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:186:16: note: 'uint16_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h: In constructor 'AudioStream::AudioStream(unsigned char, audio_block_t**)':
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:144:25: error: 'cpu_cycles' was not declared in this scope
+  144 |                         cpu_cycles = 0;
+      |                         ^~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:145:25: error: 'cpu_cycles_max' was not declared in this scope
+  145 |                         cpu_cycles_max = 0;
+      |                         ^~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:146:25: error: 'numConnections' was not declared in this scope; did you mean 'AudioConnection'?
+  146 |                         numConnections = 0;
+      |                         ^~~~~~~~~~~~~~
+      |                         AudioConnection
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h: In member function 'float AudioStream::processorUsage()':
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:52: error: 'uint32_t' was not declared in this scope
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                    ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:149:45: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  149 |         float processorUsage(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles); }
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:52: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                    ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:149:45: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  149 |         float processorUsage(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles); }
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:149:74: error: 'cpu_cycles' was not declared in this scope
+  149 |         float processorUsage(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles); }
+      |                                                                          ^~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:62: note: in definition of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                              ^
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:142: error: 'F_CPU_ACTUAL' was not declared in this scope
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                                                                                                              ^~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:149:45: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  149 |         float processorUsage(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles); }
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h: In member function 'float AudioStream::processorUsageMax()':
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:52: error: 'uint32_t' was not declared in this scope
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                    ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:150:48: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  150 |         float processorUsageMax(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles_max); }
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:52: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                    ^~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:150:48: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  150 |         float processorUsageMax(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles_max); }
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:150:77: error: 'cpu_cycles_max' was not declared in this scope
+  150 |         float processorUsageMax(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles_max); }
+      |                                                                             ^~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:62: note: in definition of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                              ^
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:115:142: error: 'F_CPU_ACTUAL' was not declared in this scope
+  115 | #define CYCLE_COUNTER_APPROX_PERCENT(n) (((float)((uint32_t)(n) * 6400u) * (float)(AUDIO_SAMPLE_RATE_EXACT / AUDIO_BLOCK_SAMPLES)) / (float)(F_CPU_ACTUAL))
+      |                                                                                                                                              ^~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:150:48: note: in expansion of macro 'CYCLE_COUNTER_APPROX_PERCENT'
+  150 |         float processorUsageMax(void) { return CYCLE_COUNTER_APPROX_PERCENT(cpu_cycles_max); }
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h: In member function 'void AudioStream::processorUsageMaxReset()':
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:151:45: error: 'cpu_cycles_max' was not declared in this scope
+  151 |         void processorUsageMaxReset(void) { cpu_cycles_max = cpu_cycles; }
+      |                                             ^~~~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:151:62: error: 'cpu_cycles' was not declared in this scope
+  151 |         void processorUsageMaxReset(void) { cpu_cycles_max = cpu_cycles; }
+      |                                                              ^~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h: In static member function 'static void AudioStream::update_all()':
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:169:57: error: 'IRQ_SOFTWARE' was not declared in this scope
+  169 |         static void update_all(void) { NVIC_SET_PENDING(IRQ_SOFTWARE); }
+      |                                                         ^~~~~~~~~~~~
+/home/runner/.platformio/packages/framework-arduinoteensy/cores/teensy4/AudioStream.h:169:40: error: 'NVIC_SET_PENDING' was not declared in this scope
+  169 |         static void update_all(void) { NVIC_SET_PENDING(IRQ_SOFTWARE); }
+      |                                        ^~~~~~~~~~~~~~~~
+In file included from .pio/libdeps/teensy41/Audio/analyze_fft1024.cpp:29:
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_saturate_rshift(int32_t, int, int)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:51:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   51 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_multiply_32x16b(int32_t, uint32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:64:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   64 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'int32_t signed_multiply_32x16t(int32_t, uint32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:77:1: warning: no return statement in function returning non-void [-Wreturn-type]
+   77 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16t_16t(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:127:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  127 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16t_16b(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:140:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  140 | }
+      | ^
+.pio/libdeps/teensy41/Audio/utility/dspinst.h: In function 'uint32_t pack_16b_16b(int32_t, int32_t)':
+.pio/libdeps/teensy41/Audio/utility/dspinst.h:153:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  153 | }
+      | ^
+.pio/libdeps/teensy41/Audio/analyze_fft1024.cpp: At global scope:
+.pio/libdeps/teensy41/Audio/analyze_fft1024.cpp:43:13: warning: 'void apply_window_to_fft_buffer(void*, const void*)' defined but not used [-Wunused-function]
+   43 | static void apply_window_to_fft_buffer(void *buffer, const void *window)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+.pio/libdeps/teensy41/Audio/analyze_fft1024.cpp:33:13: warning: 'void copy_to_fft_buffer(void*, const void*)' defined but not used [-Wunused-function]
+   33 | static void copy_to_fft_buffer(void *destination, const void *source)
+      |             ^~~~~~~~~~~~~~~~~~
+*** [.pio/build/teensy41/lib701/Audio/analyze_fft1024.cpp.o] Error 1
+========================= [FAILED] Took 44.37 seconds =========================
+
+Environment    Status    Duration
+-------------  --------  ------------
+teensy41       FAILED    00:00:44.374
+==================== 1 failed, 0 succeeded in 00:00:44.374 ====================
+Error: Process completed with exit code 1.

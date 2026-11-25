@@ -10,12 +10,15 @@
 //   4. Tela:  Display IPS TFT 2.8" ILI9341 320x240 SPI (CS=10, DC=9, RST=8, MOSI=11, SCK=13)
 // ============================================================================
 #include <Arduino.h>
+#include "AudioSynthJupiter8.h"
 #include <Audio.h>
 #include <MIDI.h>
 #include <USBHost_t36.h>
 #include <SPI.h>
 #include <ILI9341_t3.h>
-#include "AudioSynthJupiter8.h"
+#ifdef swap
+#undef swap
+#endif
 
 // --- 1. Subsistema de Áudio I2S (PCM5102A 32-Bit DAC + SGTL5000 + USB Audio) ---
 AudioSynthJupiter8     jp8Synth;

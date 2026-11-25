@@ -214,6 +214,11 @@ export function generateTeensy41ProjectFiles(
 ;      com Optoacoplador 6N138 / H11L1 direto da saída MIDI Out 3.5mm do Launchkey MK4
 ;   3. DAC: PCM5102A 32-Bit/384kHz I2S DAC (112dB SNR) + Audio Shield SGTL5000
 ;   4. Tela: Display IPS TFT 2.8" ILI9341 320x240 SPI com DMA (ILI9341_t3)
+;
+; NOTA IMPORTANTE SOBRE BIBLIOTECAS TEENSY (Teensyduino 1.62 / GCC 15.2):
+;   As bibliotecas 'Audio', 'USBHost_t36', 'ILI9341_t3', 'SPI', 'SD', 'Wire' e 'SerialFlash'
+;   JÁ VÊM EMBUTIDAS e atualizadas para Teensy 4.1 dentro do pacote oficial
+;   'framework-arduinoteensy'. Não devem ser baixadas via lib_deps do registro antigo!
 ; ============================================================================
 
 [env:teensy41]
@@ -230,11 +235,7 @@ build_flags =
   -D JP8_USE_ZDF=${useZdfFilter ? 1 : 0}
   -D JP8_STEREO_PAN=${enableStereoSplit ? 1 : 0}
 lib_deps =
-  PaulStoffregen/Audio
-  fortyseveneffects/MIDI Library
-  PaulStoffregen/USBHost_t36
-  adafruit/Adafruit GFX Library
-  PaulStoffregen/ILI9341_t3
+  fortyseveneffects/MIDI Library@^5.0.2
 
 [env:native_test]
 platform = native
@@ -1245,12 +1246,15 @@ void AudioSynthJupiter8::update(void) {
 //   4. Tela:  Display IPS TFT 2.8" ILI9341 320x240 SPI (CS=10, DC=9, RST=8, MOSI=11, SCK=13)
 // ============================================================================
 #include <Arduino.h>
+#include "AudioSynthJupiter8.h"
 #include <Audio.h>
 #include <MIDI.h>
 #include <USBHost_t36.h>
 #include <SPI.h>
 #include <ILI9341_t3.h>
-#include "AudioSynthJupiter8.h"
+#ifdef swap
+#undef swap
+#endif
 
 // --- 1. Subsistema de Áudio I2S (PCM5102A 32-Bit DAC + SGTL5000 + USB Audio) ---
 AudioSynthJupiter8     jp8Synth;
